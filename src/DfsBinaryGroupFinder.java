@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
@@ -33,7 +34,51 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     */
     @Override
     public List<Group> findConnectedGroups(int[][] image) {
+        List<Group> groups = new ArrayList<>();
+
+        boolean[][] visit = new boolean[image.length][image[0].length];
+        findConnectedGroupsHelper(image, groups, visit, 0, 0);
+        return groups;
+    }
+    public void findConnectedGroupsHelper(int[][] image, List<Group> groups, boolean[][] visit, int x, int y) {
+        if(image == null || image[x] == null) {
+            throw new NullPointerException();
+        }
+        if(image[x][y] != 1 || image[x][y] != 0) {
+            throw new IllegalArgumentException();
+        }
+        if(!visit[x][y] && image[x][y] == 1) {
+            dfs(image, groups, x, y);
+        }
+        findConnectedGroupsHelper(image, groups, visit, x + 1, y);
+        findConnectedGroupsHelper(image, groups, visit, x, y + 1);
+    }
+    public void dfs(int[][] image, List<Group> groups, int x, int y) {
+        List<Coordinate> moves = movesFinder(image, x, y);
+        for (Coordinate coordinate : moves) {
+            
+        }
+    }
+    public List<Coordinate> movesFinder(int[][] image, int x, int y) {
+        int[][] moves = {
+            {-1, 0},
+            {1, 0},
+            {0, -1},
+            {0, 1}
+        };
+
+        List<Coordinate> moveOptions = new ArrayList<>();
+
+        for(int[] move : moves) {
+            int newX = x + move[0];
+            int newY = y + move[1];
+            if(newX >= 0 && newX < image.length && newY >= 0 && newY < image[newX].length && image[newX][newY] == 1) {
+                moveOptions.add(new Coordinate(newX, newY));
+            }
+        }
+        return moveOptions;
+    }
+    public Coordinate centerFinder() {
         return null;
     }
-    
 }
