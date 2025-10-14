@@ -41,6 +41,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return groups;
     }
     public void findConnectedGroupsHelper(int[][] image, List<Group> groups, boolean[][] visit, int x, int y) {
+        List<Coordinate> points = new ArrayList<>();
         if(image == null || image[x] == null) {
             throw new NullPointerException();
         }
@@ -48,15 +49,19 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
             throw new IllegalArgumentException();
         }
         if(!visit[x][y] && image[x][y] == 1) {
-            dfs(image, groups, x, y);
+            dfs(image, groups, points, x, y);
         }
+        Coordinate center = centerFinder(points);
+        Group group = makeGroup(center);
+        groups.add(group);
         findConnectedGroupsHelper(image, groups, visit, x + 1, y);
         findConnectedGroupsHelper(image, groups, visit, x, y + 1);
     }
-    public void dfs(int[][] image, List<Group> groups, int x, int y) {
+    public void dfs(int[][] image, List<Group> groups, List<Coordinate> points, int x, int y) {
+        points.add(new Coordinate(x, y));
         List<Coordinate> moves = movesFinder(image, x, y);
         for (Coordinate coordinate : moves) {
-            
+            dfs(image, groups, points, coordinate.x(), coordinate.y());
         }
     }
     public List<Coordinate> movesFinder(int[][] image, int x, int y) {
@@ -78,7 +83,10 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         }
         return moveOptions;
     }
-    public Coordinate centerFinder() {
+    public Coordinate centerFinder(List<Coordinate> points) {
+        return null;
+    }
+    public Group makeGroup(Coordinate center) {
         return null;
     }
 }
