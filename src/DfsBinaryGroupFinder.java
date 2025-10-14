@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
@@ -34,31 +36,34 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     */
     @Override
     public List<Group> findConnectedGroups(int[][] image) {
-        List<Group> groups = new ArrayList<>();
+        List<Group> groupList = new ArrayList<>();
 
         boolean[][] visit = new boolean[image.length][image[0].length];
-        findConnectedGroupsHelper(image, groups, visit, 0, 0);
-        return groups;
+        findConnectedGroupsHelper(image, groupList, visit);
+        return groupList;
     }
-    public void findConnectedGroupsHelper(int[][] image, List<Group> groups, boolean[][] visit, int x, int y) {
-        List<Coordinate> points = new ArrayList<>();
-        for(int r = 0; r < image.length; r++) {
-            for(int c = 0; c < image[r].length; c++) {
-                if(image == null || image[x] == null) {
+    public void findConnectedGroupsHelper(int[][] image, List<Group> groupList, boolean[][] visit) {
+        
+        for(int y = 0; y < image.length; y++) {
+            for(int x = 0; x < image[y].length; x++) {
+                List<Coordinate> points = new ArrayList<>();
+                if(image == null || image[y] == null) {
                     throw new NullPointerException();
                 }
-                if(image[x][y] != 1 && image[x][y] != 0) {
+                if(image[y][x] != 1 && image[y][x] != 0) {
                     throw new IllegalArgumentException();
                 }
-                if(!visit[x][y] && image[x][y] == 1) {
-                    dfs(image, groups, visit, points, x, y);
+                if(!visit[y][x] && image[y][x] == 1) {
+                    dfs(image, groupList, visit, points, y, x);
                     Coordinate center = centerFinder(points);
                     Group group = new Group(points.size(), center);
-                    groups.add(group);
+                    groupList.add(group);
+                    //System.out.println(groupList.toString());
+                    //System.out.println();
                 }
             }
         }
-
+        Collections.sort(groupList, Comparator.reverseOrder());
         
         // if(x + 1 < image.length){
         //     findConnectedGroupsHelper(image, groups, visit, x + 1, y);
@@ -67,18 +72,18 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         //     findConnectedGroupsHelper(image, groups, visit, x, y + 1);
         // }
     }
-    public void dfs(int[][] image, List<Group> groups, boolean[][] visit, List<Coordinate> points, int x, int y) {
-        if(visit[x][y]){
+    public void dfs(int[][] image, List<Group> groupsList, boolean[][] visit, List<Coordinate> points, int y, int x) {
+        if(visit[y][x]){
             return;
         }
         points.add(new Coordinate(x, y));
-        visit[x][y] = true;
-        List<Coordinate> moves = movesFinder(image, x, y);
+        visit[y][x] = true;
+        List<Coordinate> moves = movesFinder(image, y, x);
         for (Coordinate coordinate : moves) {
-            dfs(image, groups, visit, points, coordinate.x(), coordinate.y());
+            dfs(image, groupsList, visit, points, coordinate.y(), coordinate.x());
         }
     }
-    public List<Coordinate> movesFinder(int[][] image, int x, int y) {
+    public List<Coordinate> movesFinder(int[][] image, int y, int x) {
         int[][] moves = {
             {-1, 0},
             {1, 0},
@@ -91,7 +96,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         for(int[] move : moves) {
             int newX = x + move[0];
             int newY = y + move[1];
-            if(newX >= 0 && newX < image.length && newY >= 0 && newY < image[newX].length && image[newX][newY] == 1) {
+            if(newY >= 0 && newY < image.length && newX >= 0 && newX < image[newY].length && image[newY][newX] == 1) {
                 moveOptions.add(new Coordinate(newX, newY));
             }
         }

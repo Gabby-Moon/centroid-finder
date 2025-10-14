@@ -93,7 +93,7 @@ class DfsBinaryGroupFinderTest {
         Group a = new Group(9, new Coordinate(1, 1));
         Group b = new Group(4, new Coordinate(0, 4)); // smaller than a, but closer to x than c
         Group c = new Group(4, new Coordinate(0, 7)); // smaller x than d
-        Group d = new Group(4, new Coordinate(3, 0));
+        Group d = new Group(4, new Coordinate(3, 7));
         Group e = new Group(4, new Coordinate(5, 3));
         Group f = new Group(4, new Coordinate(7, 0));
         List<Group> testGroup = new ArrayList<>();
@@ -106,6 +106,9 @@ class DfsBinaryGroupFinderTest {
 
         // sorted group for this set based on size then x, then y, should be a, b, c, d, e, f order
         List<Group> group = dfsGroupFinder.findConnectedGroups(image);
+        System.out.println(testGroup.toString());
+        System.out.println();
+        System.out.println(group.toString());
         assertEquals(group, testGroup);
     }
 
