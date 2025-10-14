@@ -42,26 +42,40 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     }
     public void findConnectedGroupsHelper(int[][] image, List<Group> groups, boolean[][] visit, int x, int y) {
         List<Coordinate> points = new ArrayList<>();
-        if(image == null || image[x] == null) {
-            throw new NullPointerException();
+        for(int r = 0; r < image.length; r++) {
+            for(int c = 0; c < image[r].length; c++) {
+                if(image == null || image[x] == null) {
+                    throw new NullPointerException();
+                }
+                if(image[x][y] != 1 && image[x][y] != 0) {
+                    throw new IllegalArgumentException();
+                }
+                if(!visit[x][y] && image[x][y] == 1) {
+                    dfs(image, groups, visit, points, x, y);
+                    Coordinate center = centerFinder(points);
+                    Group group = new Group(points.size(), center);
+                    groups.add(group);
+                }
+            }
         }
-        if(image[x][y] != 1 || image[x][y] != 0) {
-            throw new IllegalArgumentException();
-        }
-        if(!visit[x][y] && image[x][y] == 1) {
-            dfs(image, groups, points, x, y);
-        }
-        Coordinate center = centerFinder(points);
-        Group group = makeGroup(center);
-        groups.add(group);
-        findConnectedGroupsHelper(image, groups, visit, x + 1, y);
-        findConnectedGroupsHelper(image, groups, visit, x, y + 1);
+
+        
+        // if(x + 1 < image.length){
+        //     findConnectedGroupsHelper(image, groups, visit, x + 1, y);
+        // }
+        // if(y + 1 < image[x].length) {
+        //     findConnectedGroupsHelper(image, groups, visit, x, y + 1);
+        // }
     }
-    public void dfs(int[][] image, List<Group> groups, List<Coordinate> points, int x, int y) {
+    public void dfs(int[][] image, List<Group> groups, boolean[][] visit, List<Coordinate> points, int x, int y) {
+        if(visit[x][y]){
+            return;
+        }
         points.add(new Coordinate(x, y));
+        visit[x][y] = true;
         List<Coordinate> moves = movesFinder(image, x, y);
         for (Coordinate coordinate : moves) {
-            dfs(image, groups, points, coordinate.x(), coordinate.y());
+            dfs(image, groups, visit, points, coordinate.x(), coordinate.y());
         }
     }
     public List<Coordinate> movesFinder(int[][] image, int x, int y) {
@@ -84,9 +98,15 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return moveOptions;
     }
     public Coordinate centerFinder(List<Coordinate> points) {
-        return null;
-    }
-    public Group makeGroup(Coordinate center) {
-        return null;
+        int xTotal = 0;
+        int yTotal = 0;
+        for(Coordinate point : points) {
+            xTotal += point.x();
+            yTotal += point.y();
+        }
+        xTotal = xTotal / points.size();
+        yTotal = yTotal / points.size();
+
+        return new Coordinate(xTotal, yTotal);
     }
 }
