@@ -35,7 +35,7 @@ class DfsBinaryGroupFinderTest {
         pixelSet.add(pixel4);
 
         // find centroid
-        Coordinate centroid = helper_CentroidFInder(pixelSet);
+        Coordinate centroid = helper_CentroidFinder(pixelSet);
 
         // build a group
         Group groupOne = new Group(4, centroid);
@@ -45,7 +45,6 @@ class DfsBinaryGroupFinderTest {
         // build the dfs group finder so we can test it
         DfsBinaryGroupFinder dfsGroupFinder = new DfsBinaryGroupFinder();
         List<Group> testGroupList = dfsGroupFinder.findConnectedGroups(image);
-
 
         // since these are comparable, we can use assertEquals
         Assertions.assertEquals(groupList, testGroupList);
@@ -78,38 +77,39 @@ class DfsBinaryGroupFinderTest {
         DfsBinaryGroupFinder dfsGroupFinder = new DfsBinaryGroupFinder();
 
         int[][] image = {
-                // a 
+            // a 
             // y, x 0  1  2  3  4  5  6  7  8
-            /* 0 */{1, 1, 1, 0, 0, 0, 0, 1, 1}, // e
+            /* 0 */{1, 1, 1, 0, 0, 0, 0, 1, 1}, // f
             /* 1 */{1, 1, 1, 0, 0, 0, 0, 1, 1},
             /* 2 */{1, 1, 1, 0, 0, 0, 0, 0, 0},
-            /* 3 */{0, 0, 0, 0, 0, 1, 1, 0, 0}, // d
-            /* 4 */{0, 0, 0, 0, 0, 1, 1, 0, 0},
-            /* 5 */{0, 0, 0, 0, 0, 0, 0, 0, 0}, // c
+            /* 3 */{0, 0, 0, 0, 0, 1, 1, 0, 0}, // e
+            /* 4 */{1, 1, 0, 0, 0, 1, 1, 0, 0}, // <<< b
+            /* 5 */{1, 1, 0, 0, 0, 0, 0, 0, 0}, 
             /* 6 */{0, 0, 0, 0, 0, 0, 0, 0, 0},
-            /* 7 */{1, 1, 0, 1, 1, 0, 0, 0, 0}, // b
+            /* 7 */{1, 1, 0, 1, 1, 0, 0, 0, 0}, // c, d 
             /* 8 */{1, 1, 0, 1, 1, 0, 0, 0, 0},
         };
 
-
         Group a = new Group(9, new Coordinate(1, 1));
-        Group b = new Group(4, new Coordinate(0, 7));
-        Group c = new Group(4, new Coordinate(3, 7));
-        Group d = new Group(4, new Coordinate(5, 3));
-        Group e = new Group(4, new Coordinate(7, 0));
+        Group b = new Group(4, new Coordinate(0, 4)); // smaller than a, but closer to x than c
+        Group c = new Group(4, new Coordinate(0, 7)); // smaller x than d
+        Group d = new Group(4, new Coordinate(3, 0));
+        Group e = new Group(4, new Coordinate(5, 3));
+        Group f = new Group(4, new Coordinate(7, 0));
         List<Group> testGroup = new ArrayList<>();
         testGroup.add(a);
         testGroup.add(b);
         testGroup.add(c);
         testGroup.add(d);
         testGroup.add(e);
+        testGroup.add(f);
 
-        // sorted group for this set based on size then x, then y, should be a, b, c, d, e order
+        // sorted group for this set based on size then x, then y, should be a, b, c, d, e, f order
         List<Group> group = dfsGroupFinder.findConnectedGroups(image);
         assertEquals(group, testGroup);
     }
 
-    Coordinate helper_CentroidFInder(List<Coordinate> pixelSet) {
+    Coordinate helper_CentroidFinder(List<Coordinate> pixelSet) {
         int xTotal = 0;
         int yTotal = 0;
         int size = 0;
