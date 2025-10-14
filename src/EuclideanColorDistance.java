@@ -19,6 +19,21 @@ public class EuclideanColorDistance implements ColorDistanceFinder {
      */
     @Override
     public double distance(int colorA, int colorB) {
-        return 0;
+        // isolate red by masking and shifting 16 bits
+        // one of the other groups mentioned an alpha channel so masking that just in case
+        int r1 = (colorA & 0xFF0000) >> 16;
+        int r2 = (colorB & 0xFF0000) >> 16; 
+
+        // isolate green and shifting 8 bits
+        int g1 = (colorA & 0x00FF00) >> 8;
+        int g2 = (colorB & 0x00FF00) >> 8;
+
+        // isolate blue by masking, no shift required
+        int b1 = (colorA & 0x0000FF);
+        int b2 = (colorB & 0x0000FF);
+
+        double distance = Math.sqrt(((r1 - r2)^2 + (g1 - g2)^2 + (b1 - b2)^2));
+
+        return distance;
     }
 }
