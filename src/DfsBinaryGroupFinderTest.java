@@ -2,9 +2,7 @@
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -91,11 +89,13 @@ class DfsBinaryGroupFinderTest {
         };
 
         Group a = new Group(9, new Coordinate(1, 1));
-        Group b = new Group(4, new Coordinate(0, 4)); // smaller than a, but closer to x than c
-        Group c = new Group(4, new Coordinate(0, 7)); // smaller x than d
+        Group b = new Group(4, new Coordinate(7, 0));
+        Group c = new Group(4, new Coordinate(5, 3));
         Group d = new Group(4, new Coordinate(3, 7));
-        Group e = new Group(4, new Coordinate(5, 3));
-        Group f = new Group(4, new Coordinate(7, 0));
+        Group e = new Group(4, new Coordinate(0, 7));
+        Group f = new Group(4, new Coordinate(0, 4));
+        
+        
         List<Group> testGroup = new ArrayList<>();
         testGroup.add(a);
         testGroup.add(b);
@@ -103,12 +103,10 @@ class DfsBinaryGroupFinderTest {
         testGroup.add(d);
         testGroup.add(e);
         testGroup.add(f);
-
-        // sorted group for this set based on size then x, then y, should be a, b, c, d, e, f order
+        // Collections.sort(testGroup, Comparator.reverseOrder());
+        // descending sorted group for this set based on size, then x, then y, should be a, b, c, d, e, f order
         List<Group> group = dfsGroupFinder.findConnectedGroups(image);
-        System.out.println(testGroup.toString());
-        System.out.println();
-        System.out.println(group.toString());
+
         assertEquals(group, testGroup);
     }
 
