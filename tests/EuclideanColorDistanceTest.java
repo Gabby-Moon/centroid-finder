@@ -34,4 +34,12 @@ public class EuclideanColorDistanceTest {
         double should = 0.0;
         Assertions.assertEquals(should, real);
     }
+
+    @Test
+    void euclideanColorDistanceSameComplexBlack() {
+        EuclideanColorDistance compare = new EuclideanColorDistance();
+        double real = compare.distance(0x000000, 0x000000);
+        double should = 0.0;
+        Assertions.assertEquals(should, real);
+    }
 }
