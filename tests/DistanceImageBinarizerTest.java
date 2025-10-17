@@ -113,17 +113,19 @@ class DistanceImageBinarizerTest {
         testImage.setRGB(0, 0, 0xFFFFFF);
         testImage.setRGB(1, 0, 0xFFFFFF);
         testImage.setRGB(2, 0, 0xFFFFFF);
+
         testImage.setRGB(0, 1, 0xFFFFFF);
         testImage.setRGB(1, 1, 0xFFFFFF);
         testImage.setRGB(2, 1, 0xFFFFFF);
+        
         testImage.setRGB(0, 2, 0xFFFFFF);
-        testImage.setRGB(2, 2, 0xFFFFFF);
+        testImage.setRGB(1, 2, 0xFFFFFF);
         testImage.setRGB(2, 2, 0xFFFFFF);
         
-        testImage.setRGB(0, 0, 0xFFFFFF);
-        testImage.setRGB(0, 0, 0xFFFFFF);
-        testImage.setRGB(0, 0, 0xFFFFFF);
-        testImage.setRGB(0, 0, 0xFFFFFF);
+        testImage.setRGB(0, 4, 0xFFFFFF);
+        testImage.setRGB(0, 5, 0xFFFFFF);
+        testImage.setRGB(1, 4, 0xFFFFFF);
+        testImage.setRGB(1, 5, 0xFFFFFF);
 
 
         // height and width should be the same
@@ -131,10 +133,10 @@ class DistanceImageBinarizerTest {
         assertEquals(image.getHeight(), testImage.getHeight());
         assertEquals(image.getType(), testImage.getType());
         
-        // each pixel should be the same color
-        for (int y = 0; y < imageArray.length; y++) {
-            for (int x = 0; x < imageArray[0].length; x++) {
-                assertEquals(image.getRGB(x, y), testImage.getRGB(x, y));
+        // checking colors
+        for (int y = 0; y < testImage.getHeight(); y++) {
+            for (int x = 0; x < testImage.getWidth(); x++) {
+                assertEquals(testImage.getRGB(x, y), image.getRGB(x, y));
             }
         }
     }
