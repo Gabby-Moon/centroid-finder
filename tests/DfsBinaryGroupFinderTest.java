@@ -1,5 +1,6 @@
 // format pulled from previous assignment
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,30 @@ class DfsBinaryGroupFinderTest {
         List<Group> group = dfsGroupFinder.findConnectedGroups(image);
 
         assertEquals(group, testGroup);
+    }
+
+    @Test
+    void test_NullPointerException() {
+        DfsBinaryGroupFinder dfsGroupFinder = new DfsBinaryGroupFinder();
+        int[][] image = null;
+
+        assertThrows(NullPointerException.class, () -> {
+            dfsGroupFinder.findConnectedGroups(image);
+        });
+    }
+
+    @Test
+    void test_IllegalArgumentException() {
+        DfsBinaryGroupFinder dfsGroupFinder = new DfsBinaryGroupFinder();
+        int[][] image = {
+            {0,0,0},
+            {0,3,0},
+            {0,0,0}
+        };;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            dfsGroupFinder.findConnectedGroups(image);
+        });
     }
 
     Coordinate helper_CentroidFinder(List<Coordinate> pixelSet) {
