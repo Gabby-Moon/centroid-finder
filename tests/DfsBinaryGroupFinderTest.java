@@ -150,4 +150,18 @@ class DfsBinaryGroupFinderTest {
 
         return new Coordinate(xCenter, yCenter);
     }
+
+    @Test
+    public void testBigGroup() {
+        DfsBinaryGroupFinder dfsGroupFinder = new DfsBinaryGroupFinder();
+        int[][] image = new int[1000][1000];
+        for (int y = 0; y < image.length; y++) {
+            for (int x = 0; x < image[y].length; x++) {
+                image[y][x] = 1;
+            }
+        }
+
+        List<Group> group = dfsGroupFinder.findConnectedGroups(image);
+        assertEquals(group.size(), 1); // should be just one (big) group
+    }
 }
