@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
    /**
@@ -52,6 +54,8 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
                 }
                 if(!visit[y][x] && image[y][x] == 1) {
                     dfs(image, groupList, visit, points, y, x);
+
+
                     Coordinate center = centerFinder(points);
                     Group group = new Group(points.size(), center);
                     groupList.add(group);
@@ -69,17 +73,42 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         //     findConnectedGroupsHelper(image, groups, visit, x, y + 1);
         // }
     }
-    public void dfs(int[][] image, List<Group> groupsList, boolean[][] visit, List<Coordinate> points, int y, int x) {
-        if(visit[y][x]){
-            return;
-        }
-        points.add(new Coordinate(x, y));
-        visit[y][x] = true;
-        List<Coordinate> moves = movesFinder(image, y, x);
-        for (Coordinate coordinate : moves) {
-            dfs(image, groupsList, visit, points, coordinate.y(), coordinate.x());
+    // public void dfs(int[][] image, List<Group> groupsList, boolean[][] visit, List<Coordinate> points, int y, int x) {
+    //     if(visit[y][x]){
+    //         return;
+    //     }
+    //     points.add(new Coordinate(x, y));
+    //     visit[y][x] = true;
+    //     List<Coordinate> moves = movesFinder(image, y, x);
+    //     for (Coordinate coordinate : moves) {
+    //         if(!visit[coordinate.y()][coordinate.x()]) {
+    //             dfs(image, groupsList, visit, points, coordinate.y(), coordinate.x());
+    //         }
+            
+    //     }
+    // }
+    public void dfs(int[][] image, List<Group> groupList, boolean[][] visit, List<Coordinate> points, int y, int x) {
+        Queue<Coordinate> checks = new LinkedList<>();
+        checks.add(new Coordinate(x, y));
+
+        // no stack overflow because of queues
+        while (!checks.isEmpty()) {
+            Coordinate curr = checks.poll();
+            if(visit[curr.y()][curr.x()]){
+                continue;
+            }
+            points.add(curr);
+            visit[curr.y()][curr.x()] = true;
+            List<Coordinate> moves = movesFinder(image, curr.y(), curr.x());
+            for(Coordinate coordinate : moves) {
+                if(!visit[coordinate.y()][coordinate.x()]) {
+                    checks.add(coordinate);
+                }
+            }
+            
         }
     }
+
     public List<Coordinate> movesFinder(int[][] image, int y, int x) {
         int[][] moves = {
             {-1, 0},
