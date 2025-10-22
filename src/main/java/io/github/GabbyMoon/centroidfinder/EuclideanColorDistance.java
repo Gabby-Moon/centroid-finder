@@ -1,3 +1,5 @@
+package main.java.io.github.GabbyMoon.centroidfinder;
+
 public class EuclideanColorDistance implements ColorDistanceFinder {
     /**
      * Returns the euclidean color distance between two hex RGB colors.

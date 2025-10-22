@@ -1,3 +1,5 @@
+package main.java.io.github.GabbyMoon.centroidfinder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

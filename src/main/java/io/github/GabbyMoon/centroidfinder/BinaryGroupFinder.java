@@ -1,3 +1,5 @@
+package main.java.io.github.GabbyMoon.centroidfinder;
+
 import java.util.List;
 
 public interface BinaryGroupFinder {

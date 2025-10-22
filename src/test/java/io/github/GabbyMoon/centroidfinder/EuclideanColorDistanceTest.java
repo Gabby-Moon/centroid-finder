@@ -1,5 +1,9 @@
+package test.java.io.github.GabbyMoon.centroidfinder;
+import main.java.io.github.GabbyMoon.centroidfinder.*;
+
 // format pulled from previous assignment
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.Assertions;
 
 public class EuclideanColorDistanceTest {

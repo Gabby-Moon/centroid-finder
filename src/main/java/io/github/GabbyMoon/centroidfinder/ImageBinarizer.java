@@ -1,3 +1,5 @@
+package main.java.io.github.GabbyMoon.centroidfinder;
+
 import java.awt.image.BufferedImage;
 
 /**
