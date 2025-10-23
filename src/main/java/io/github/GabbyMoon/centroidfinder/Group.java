@@ -1,4 +1,4 @@
-package main.java.io.github.GabbyMoon.centroidfinder;
+package io.github.GabbyMoon.centroidfinder;
 
 /**
  * Represents a group of contiguous pixels in an image.

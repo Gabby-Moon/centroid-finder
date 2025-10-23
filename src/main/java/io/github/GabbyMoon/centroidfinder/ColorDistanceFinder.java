@@ -1,4 +1,4 @@
-package main.java.io.github.GabbyMoon.centroidfinder;
+package io.github.GabbyMoon.centroidfinder;
 
 /**
  * Defines an interface for computing the distance between two colors.

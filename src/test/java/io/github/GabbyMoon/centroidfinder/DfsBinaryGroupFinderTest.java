@@ -1,9 +1,10 @@
-package test.java.io.github.GabbyMoon.centroidfinder;
-import main.java.io.github.GabbyMoon.centroidfinder.*;
+package io.github.GabbyMoon.centroidfinder;
+
 
 // format pulled from previous assignment
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import java.util.ArrayList;
 import java.util.List;

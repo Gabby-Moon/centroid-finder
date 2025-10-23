@@ -1,4 +1,4 @@
-package main.java.io.github.GabbyMoon.centroidfinder;
+package io.github.GabbyMoon.centroidfinder;
 
 public class EuclideanColorDistance implements ColorDistanceFinder {
     /**
