@@ -24,8 +24,13 @@
     <!-- https://mvnrepository.com/artifact/org.bytedeco/javacv -->
     <dependency>
         <groupId>org.bytedeco</groupId>
-        <artifactId>javacv</artifactId>
+        <artifactId>javacv-platform</artifactId>
         <version>1.5.12</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>ffmpeg-platform</artifactId>
+      <version>6.1.1-1.5.10</version>
     </dependency>
   </dependencies>
   
@@ -43,7 +48,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <mainClass>io.github.GabbyMoon.centroidfinder.ImageSummaryApp</mainClass>
+          <mainClass>io.github.GabbyMoon.centroidfinder.VideoExperiment</mainClass>
         </configuration>
       </plugin>
     </plugins>
