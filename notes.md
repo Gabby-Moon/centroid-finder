@@ -13,4 +13,5 @@ And it writes the groups into a csv with size and pixel location.
 1. mvn clean <- cleans up old files
 2. mvn compile <- compiles .java to .class files
 3. mvn test <- runs the junit tests
-4. mvn exec:java -Dexec.args="sampleInput/squares.jpg sampleOutput/binarized.png FFA200 164" <- runs the program with the arguments
+4. mvn exec:java -Dexec.args="sampleInput/squares.jpg sampleOutput/binarized.png FFA200 164" <- runs the ImageSummaryApp with the arguments
+4. mvn exec:java -Dexec.args="sampleInput/input.mp4 sampleOutput/output.csv FFA200 164" <- runs the VideoProcessorApp with the arguments

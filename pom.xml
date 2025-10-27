@@ -48,7 +48,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <mainClass>io.github.GabbyMoon.centroidfinder.VideoExperiment</mainClass>
+          <mainClass>io.github.GabbyMoon.centroidfinder.VideoProcessingApp</mainClass>
         </configuration>
       </plugin>
     </plugins>
