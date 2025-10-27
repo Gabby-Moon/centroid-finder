@@ -26,3 +26,4 @@ replay_pid*
 target/
 
 sampleInput/ensantina.mp4
+sampleOutput/exampleFrame.png
