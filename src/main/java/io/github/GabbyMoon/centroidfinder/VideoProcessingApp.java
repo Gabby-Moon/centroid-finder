@@ -4,10 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber;
-import org.bytedeco.javacv.Java2DFrameConverter;
 
 public class VideoProcessingApp {
     public static void main(String[] args) {
@@ -26,6 +23,7 @@ public class VideoProcessingApp {
             targetColor = Integer.parseInt(targetColorInput, 16);
         } catch (NumberFormatException e) {
             System.err.println("Invalid hex target color. Please provide a color in RRGGBB format.");
+            return;
         }
         
         int threshold = 0;
@@ -33,47 +31,43 @@ public class VideoProcessingApp {
             threshold = Integer.parseInt(thresholdInput);
         } catch (NumberFormatException e) {
             System.err.println("Threshold argument ( " + threshold + ") must be an integer.");
+            return;
         }
 
         List<ImageFrame> frames = null;
         try {
-            VideoFrameExtractor extractor = new VideoFrameExtractor(inputVideoString);
+            VideoFrameExtractor extractor = new VideoFrameExtractor(inputPath);
             frames = extractor.extractFrames();
         } catch (FrameGrabber.Exception e) {
             System.err.println("Video extraction failed: " + e.getMessage());
             e.printStackTrace();
+            return;
         }
 
-        List<FrameGroupData> groupData = new ArrayList<>();
+        List<FrameGroupData> frameGroupData = new ArrayList<>();
         // pass frames to next step after checking that frames contains at least one frame
         if (frames != null & frames.size() > 0) {
-            // call the frame processor and return to groupdata
-            // groupData = 
+            // call the frame processor and and pass 
+            // groupDataProcessor(threshold, targetColor, frameGroupData); << pass in threshold and target color and then add the frame group data to the list in the method?
         } else {
-            System.err.println("No frames extracted: " + frames.toString());
+            System.err.println("No frames available for processing: " + frames.toString());
+            return;
         }
 
         // pass the Frame Group data to a writer process to write to csv
-        if (groupData != null && groupData.size() > 0) {
-            try (PrintWriter writer = new PrintWriter(out)) {
-            for (Group group : groups) {
-                writer.println(group.toCsvRow());
+        if (frameGroupData != null && frameGroupData.size() > 0) {
+            try (PrintWriter writer = new PrintWriter(outputPath)) {
+                for (FrameGroupData frameData : frameGroupData) {
+                    writer.println(frameData.toCsvRow());
+                }
+                System.out.println("Groups summary saved as groups.csv");
+            } catch (Exception e) {
+                System.err.println("Error writing groups.csv");
+                e.printStackTrace();
+                return;
             }
-            System.out.println("Groups summary saved as groups.csv");
-        } catch (Exception e) {
-            System.err.println("Error writing groups.csv");
-            e.printStackTrace();
-        }
         } else {
             System.err.println("No groups found: " + frames.toString());
         }
-        
-
-
-
-
-
-
-
     }
 }
