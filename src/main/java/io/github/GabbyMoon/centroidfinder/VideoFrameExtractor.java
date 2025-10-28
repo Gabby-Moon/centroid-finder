@@ -3,6 +3,7 @@ package io.github.GabbyMoon.centroidfinder;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bytedeco.ffmpeg.global.avutil;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -20,14 +21,14 @@ public class VideoFrameExtractor {
         grabber.setPixelFormat(avutil.AV_PIX_FMT_RGB24); // set the image format to RGB
     }
 
-    public ArrayList<ImageFrame> extractFrames() throws FrameGrabber.Exception {
+    public List<ImageFrame> extractFrames() throws FrameGrabber.Exception {
         // start the grabber
         grabber.start();
-        long interval = 60_000_000; // the interval is every 60 seconds
+        long interval = 1_000_000; // the interval is every second
         long duration = grabber.getLengthInTime(); // check video length
         
         // loop over the video
-        for (long microseconds = 0; microseconds <= duration; microseconds+=interval) {
+        for (long microseconds = 0; microseconds < duration; microseconds+=interval) {
             grabber.setTimestamp(microseconds); //seek to the next location we're doing a screengrab
             long actualTimestamp = grabber.getTimestamp(); // this can apparently vary from the requested (set) value due to codec things?
             double seconds = actualTimestamp / 1_000_000.0; // recording seconds so this is easier to read
