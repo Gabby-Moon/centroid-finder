@@ -15,8 +15,8 @@ public class VideoProcessingApp {
 
         String inputPath = args[0];
         String outputPath = args[1];
-        String targetColorInput = args[3];
-        String thresholdInput = args[4];
+        String targetColorInput = args[2];
+        String thresholdInput = args[3];
 
         int targetColor = 0;
         try {
