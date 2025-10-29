@@ -15,6 +15,10 @@ public class FrameProcessor {
     public void groupDataProcessor(int threshold, int targetColor, List<FrameGroupData> frameGroupData) {
         ImageBinarizer binarizer = new DistanceImageBinarizer(this.finder, targetColor, threshold);
         BinarizingImageGroupFinder binaryGroupFinder = new BinarizingImageGroupFinder(binarizer, this.groupFinder);
+        if(frames == null || frames.size() == 0) {
+            frameGroupData.add(new FrameGroupData((long)-1.0, new Group(0, new Coordinate(-1, -1))));
+            return;
+        }
 
         for(ImageFrame frame : frames) {
             // assuming the given frames are in the correct time interval and not EVERY frame
@@ -28,8 +32,8 @@ public class FrameProcessor {
         ImageBinarizer binarizer = new DistanceImageBinarizer(this.finder, targetColor, threshold);
         BinarizingImageGroupFinder binaryGroupFinder = new BinarizingImageGroupFinder(binarizer, this.groupFinder);
         List<Group> binGroups = binaryGroupFinder.findConnectedGroups(image);
-        if(binGroups == null) {
-            return null;
+        if(binGroups == null || binGroups.size() == 0) {
+            return new Group(0, new Coordinate(-1, -1));
         }
         return binGroups.get(0);
     }
