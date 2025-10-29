@@ -73,17 +73,16 @@ public class VideoTestUtilities {
         return img;
     }
 
-    private static Color yuvToRgb(int y, int u, int v) {
-    int r = (int)Math.round(y + 1.402 * (v - 128));
-    int g = (int)Math.round(y - 0.344136 * (u - 128) - 0.714136 * (v - 128));
-    int b = (int)Math.round(y + 1.772 * (u - 128));
+    // private static Color yuvToRgb(int y, int u, int v) {
+    // int r = (int)Math.round(y + 1.402 * (v - 128));
+    // int g = (int)Math.round(y - 0.344136 * (u - 128) - 0.714136 * (v - 128));
+    // int b = (int)Math.round(y + 1.772 * (u - 128));
 
-    // clamp to 0–255
-    r = Math.min(255, Math.max(0, r));
-    g = Math.min(255, Math.max(0, g));
-    b = Math.min(255, Math.max(0, b));
+    // // clamp to 0–255
+    // r = Math.min(255, Math.max(0, r));
+    // g = Math.min(255, Math.max(0, g));
+    // b = Math.min(255, Math.max(0, b));
 
-    return new Color(r, g, b);
+    // return new Color(r, g, b);
 }
 
-}
