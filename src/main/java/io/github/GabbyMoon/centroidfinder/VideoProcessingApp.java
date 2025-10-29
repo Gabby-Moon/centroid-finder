@@ -36,40 +36,40 @@ public class VideoProcessingApp {
 
         List<ImageFrame> frames = null;
         try {
-            VideoFrameExtractor extractor = new VideoFrameExtractor(inputPath);
-            frames = extractor.extractFrames();
+            VideoFrameExtractor extractor = new VideoFrameExtractor();
+            frames = extractor.extractFrames(inputPath, threshold, targetColor);
         } catch (FrameGrabber.Exception e) {
             System.err.println("Video extraction failed: " + e.getMessage());
             e.printStackTrace();
             return;
         }
 
-        List<FrameGroupData> frameGroupData = new ArrayList<>();
-        // pass frames to next step after checking that frames contains at least one frame
-        if (frames != null & frames.size() > 0) {
-            // call the frame processor and and pass 
-            // groupDataProcessor(threshold, targetColor, frameGroupData); << pass in threshold and target color and then add the frame group data to the list in the method?
-            FrameProcessor processor = new FrameProcessor(frames);
-            processor.groupDataProcessor(threshold, targetColor, frameGroupData);
-        } else {
-            System.err.println("No frames available for processing: " + frames.toString());
-            return;
-        }
+        // List<FrameGroupData> frameGroupData = new ArrayList<>();
+        // // pass frames to next step after checking that frames contains at least one frame
+        // if (frames != null & frames.size() > 0) {
+        //     // call the frame processor and and pass 
+        //     // groupDataProcessor(threshold, targetColor, frameGroupData); << pass in threshold and target color and then add the frame group data to the list in the method?
+        //     FrameProcessor processor = new FrameProcessor(frames);
+        //     processor.groupDataProcessor(threshold, targetColor, frameGroupData);
+        // } else {
+        //     System.err.println("No frames available for processing: " + frames.toString());
+        //     return;
+        // }
 
         // pass the Frame Group data to a writer process to write to csv
-        if (frameGroupData != null && frameGroupData.size() > 0) {
-            try (PrintWriter writer = new PrintWriter(outputPath)) {
-                for (FrameGroupData frameData : frameGroupData) {
-                    writer.println(frameData.toCsvRow());
-                }
-                System.out.println("Groups summary saved as groups.csv");
-            } catch (Exception e) {
-                System.err.println("Error writing groups.csv");
-                e.printStackTrace();
-                return;
-            }
-        } else {
-            System.err.println("No groups found: " + frames.toString());
-        }
+        // if (frames != null && frames.size() > 0) {
+        //     try (PrintWriter writer = new PrintWriter(outputPath)) {
+        //         for (ImageFrame frameData : frames) {
+        //             writer.println(new FrameGroupData(frameData, null));
+        //         }
+        //         System.out.println("Groups summary saved as groups.csv");
+        //     } catch (Exception e) {
+        //         System.err.println("Error writing groups.csv");
+        //         e.printStackTrace();
+        //         return;
+        //     }
+        // } else {
+        //     System.err.println("No groups found: " + frames.toString());
+        // }
     }
 }
