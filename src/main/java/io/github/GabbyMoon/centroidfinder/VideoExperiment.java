@@ -69,7 +69,6 @@ public class VideoExperiment {
     public static void javaCVAsh() {
         // these were my local paths for testing things
         String videoPath = "sampleInput/ensantina.mp4";
-        String outputName = "sampleOutput/exampleFrame.png";
 
 
         // try/catch to prevent exceptions in case the video is missing/wrong path
