@@ -49,6 +49,8 @@ public class VideoProcessingApp {
         if (frames != null & frames.size() > 0) {
             // call the frame processor and and pass 
             // groupDataProcessor(threshold, targetColor, frameGroupData); << pass in threshold and target color and then add the frame group data to the list in the method?
+            FrameProcessor processor = new FrameProcessor(frames);
+            processor.groupDataProcessor(threshold, targetColor, frameGroupData);
         } else {
             System.err.println("No frames available for processing: " + frames.toString());
             return;
