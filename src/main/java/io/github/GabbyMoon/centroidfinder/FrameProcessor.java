@@ -1,6 +1,7 @@
 package io.github.GabbyMoon.centroidfinder;
 
 import java.util.List;
+import java.awt.image.BufferedImage;
 
 public class FrameProcessor {
     private final List<ImageFrame> frames;
@@ -21,5 +22,15 @@ public class FrameProcessor {
             // passes in the largest group(at 0 is the largest) and the time
             frameGroupData.add(new FrameGroupData(frame.microsecondsTimestamp(), binaryGroup.get(0)));
         }
+    }
+
+    public Group groupDataProcessor(int threshold, int targetColor, BufferedImage image) {
+        ImageBinarizer binarizer = new DistanceImageBinarizer(this.finder, targetColor, threshold);
+        BinarizingImageGroupFinder binaryGroupFinder = new BinarizingImageGroupFinder(binarizer, this.groupFinder);
+        List<Group> binGroups = binaryGroupFinder.findConnectedGroups(image);
+        if(binGroups == null) {
+            return null;
+        }
+        return binGroups.get(0);
     }
 }
