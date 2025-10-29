@@ -13,8 +13,8 @@ public class VideoFrameExtractorTest {
     @Test
     public void testExtractGroupsFromEnsantinaVideo() throws FrameGrabber.Exception, IOException {
         String filepath = "sampleInput/ensantina.mp4";
-        int threshold = 30;
-        int hexTargetColor = 0x7F0000;
+        int threshold = 100;
+        int hexTargetColor = 0x4A0000;
 
         VideoFrameExtractor extractor = new VideoFrameExtractor();
         List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
