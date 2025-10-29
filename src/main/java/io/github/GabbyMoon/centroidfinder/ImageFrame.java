@@ -1,7 +1,7 @@
 package io.github.GabbyMoon.centroidfinder;
 import java.awt.image.BufferedImage;
 
-public record ImageFrame(BufferedImage image, long microsecondsTimestamp, double secondsTimestamp) {
+public record ImageFrame(BufferedImage image, long microsecondsTimestamp, double secondsTimestamp, Group group) {
     // The java CV grabber .getTimestamp is a long so we can convert this later during printing for readability to preserve the original data
     @Override
     public String toString() {
