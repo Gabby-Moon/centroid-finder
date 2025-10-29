@@ -11,6 +11,9 @@ public class FrameProcessor {
     public FrameProcessor(List<ImageFrame> frames) {
         this.frames = frames;
     }
+    public FrameProcessor() {
+        this.frames = null;
+    }
 
     public void groupDataProcessor(int threshold, int targetColor, List<FrameGroupData> frameGroupData) {
         ImageBinarizer binarizer = new DistanceImageBinarizer(this.finder, targetColor, threshold);
