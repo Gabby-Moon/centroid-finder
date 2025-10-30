@@ -1,3 +1,4 @@
+# Planning
 1. Main (ex: SalamanderTrackingApp.java)
 - INPUT: the command line arguments with the file location, the color, and distance
 - Orchestrates the entire process
@@ -34,3 +35,13 @@ INPUT: List of FrameGroupData, inputCSV name/path from main args
 > Output format will be : Timestamp, Group .getX, Group .getY
 > null buffered images (failed framegrabs) or null group data (no salamander) should be written as "timestamp, -1, -1" per instructions
 OUTPUT: CSV written to hard disc in specified location/format
+
+
+# Wave 4: Validating
+The jar executable was created and ran on a generated video file with a cyan block moving diagonally across a black background. The x and y coordinates of the group Coordinate moved as the timestamps changed, showing that it was tracking movement more or less as expected. 
+
+For test color, we sampled from the original project and expanded the threshold until it grabbed most what we perceived as the salamander image, which also showed movement across the frame. 
+
+With the way the frames are sampled, there is a pattern with frames where Group data returned from group finder does not find a large enough group for groups to have any data after enough frames are processed. There does not seem to be a correlation to certain image frames, as this happens even with a long enough generated video which should not have color issues.
+
+For color and threshold it could be improved with image processing or set-up to make sure the salamander is always a distinct color from the background. 
