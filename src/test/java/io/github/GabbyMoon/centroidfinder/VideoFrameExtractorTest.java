@@ -45,7 +45,7 @@ public class VideoFrameExtractorTest {
 
     @Test
     public void testExtractGroupsFromWhiteBox() throws FrameGrabber.Exception, IOException, Exception {
-        String filepath = testVideo().toString();
+        String filepath = testVideo(4).toString();
         int threshold = 100;
         int hexTargetColor = 0xffffff;
 
@@ -53,6 +53,27 @@ public class VideoFrameExtractorTest {
         List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
 
         String outputPath = "sampleOutput/small_groups.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+            for (ImageFrame frame : frames) {
+                Group group = frame.group();
+                writer.write(group.toCsvRow());
+                writer.newLine();
+            }
+        }
+
+        System.out.println("Group data written to: " + outputPath);
+    }
+
+    @Test
+    public void testExtractGroupsFromLongWhiteBox() throws FrameGrabber.Exception, IOException, Exception {
+        String filepath = testVideo(12).toString();
+        int threshold = 100;
+        int hexTargetColor = 0xffffff;
+
+        VideoFrameExtractor extractor = new VideoFrameExtractor();
+        List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
+
+        String outputPath = "sampleOutput/small_long_groups.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
             for (ImageFrame frame : frames) {
                 Group group = frame.group();
@@ -144,7 +165,7 @@ public class VideoFrameExtractorTest {
     }
 
 
-    public Path testVideo() throws Exception {
+    public Path testVideo(int secs) throws Exception {
         Path tempFile = Files.createTempFile("test-video", ".mp4");
         tempFile.toFile().deleteOnExit();
 
@@ -156,7 +177,7 @@ public class VideoFrameExtractorTest {
 
             Java2DFrameConverter converter = new Java2DFrameConverter();
 
-            int totalFrames = (int) Math.round(4 * 12);
+            int totalFrames = (int) Math.round(secs * 12);
             for (int i = 0; i < totalFrames; i++) {
                 java.awt.Color c = new java.awt.Color(255, 255, 255);
                 BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_3BYTE_BGR);
