@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+
 import java.awt.Color;
 
 public class VideoFrameExtractorTest {
@@ -59,9 +63,11 @@ public class VideoFrameExtractorTest {
                 writer.write(group.toCsvRow());
                 writer.newLine();
             }
+            writer.close();
         }
 
         System.out.println("Group data written to: " + outputPath);
+        
     }
 
     @Test
@@ -79,7 +85,18 @@ public class VideoFrameExtractorTest {
                 Group group = frame.group();
                 writer.write(group.toCsvRow());
                 writer.newLine();
+                BufferedImage img = frame.image();
+                    if (img != null) {
+                        long tsMicro = frame.microsecondsTimestamp(); // microseconds
+                        double tsSec = tsMicro / 1_000_000.0; // convert to seconds
+                        File out = new File("debugFrames/", String.format("frame_%06.2f.png", tsSec));
+                        ImageIO.write(img, "png", out);
+                        
+                    }
             }
+            
+            
+            writer.close();
         }
 
         System.out.println("Group data written to: " + outputPath);
@@ -180,7 +197,7 @@ public class VideoFrameExtractorTest {
             int totalFrames = (int) Math.round(secs * 12);
             for (int i = 0; i < totalFrames; i++) {
                 java.awt.Color c = new java.awt.Color(255, 255, 255);
-                BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_3BYTE_BGR);
+                BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_INT_RGB);
                 Graphics2D g = img.createGraphics();
                 g.setColor(c);
                 g.fillRect(0, 0, 180/2, 180/2);
@@ -215,7 +232,7 @@ public class VideoFrameExtractorTest {
                 int maxY = 180 - rectHeight;
 
                 for (int i = 0; i < totalFrames; i++) {
-                    BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_3BYTE_BGR);
+                    BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_INT_RGB);
                     Graphics2D g = img.createGraphics();
 
                     Color background = new Color(0, 0, 0);
