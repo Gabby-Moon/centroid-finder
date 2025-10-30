@@ -1,7 +1,5 @@
 package io.github.GabbyMoon.centroidfinder;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bytedeco.javacv.FrameGrabber;
