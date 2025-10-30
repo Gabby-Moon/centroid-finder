@@ -66,7 +66,7 @@ public class VideoFrameExtractorTest {
 
     @Test
     public void testExtractGroupsFromLongWhiteBox() throws FrameGrabber.Exception, IOException, Exception {
-        String filepath = testVideo(12).toString();
+        String filepath = testVideo(60).toString();
         int threshold = 100;
         int hexTargetColor = 0xffffff;
 
