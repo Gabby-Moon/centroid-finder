@@ -2,6 +2,7 @@ package io.github.GabbyMoon.centroidfinder;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -43,6 +44,8 @@ public class VideoFrameExtractor {
             grabber.stop();
         }
 
+        // sort frames by timestamp
+        Collections.sort(frames);
         return frames;
     }
 }
