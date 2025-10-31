@@ -29,3 +29,6 @@ sampleInput/ensantina.mp4
 sampleOutput/exampleFrame.png
 debugFrames
 sampleOutput/*.mp4
+
+.env
+server/node_modules
