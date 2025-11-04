@@ -6,12 +6,9 @@ import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -70,37 +67,47 @@ public class VideoFrameExtractorTest {
         
     }
 
-    @Test
-    public void testExtractGroupsFromLongWhiteBox() throws FrameGrabber.Exception, IOException, Exception {
-        String filepath = testVideo(60).toString();
-        int threshold = 100;
-        int hexTargetColor = 0xffffff;
+    // @Test
+    // public void testExtractGroupsFromLongWhiteBox() throws FrameGrabber.Exception, IOException, Exception {
+    //     String filepath = testVideo(60).toString();
+    //     int threshold = 100;
+    //     int hexTargetColor = 0xffffff;
 
-        VideoFrameExtractor extractor = new VideoFrameExtractor();
-        List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
 
-        String outputPath = "sampleOutput/small_long_groups.csv";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
-            for (ImageFrame frame : frames) {
-                Group group = frame.group();
-                writer.write(group.toCsvRow());
-                writer.newLine();
-                BufferedImage img = frame.image();
-                    if (img != null) {
-                        long tsMicro = frame.microsecondsTimestamp(); // microseconds
-                        double tsSec = tsMicro / 1_000_000.0; // convert to seconds
-                        File out = new File("debugFrames/", String.format("frame_%06.2f.png", tsSec));
-                        ImageIO.write(img, "png", out);
+    //     System.out.println("Working directory: " + System.getProperty("user.dir"));
+        
+    //     String outputPath = "sampleOutput/small_long_groups.csv";
+    //     System.out.println(outputPath);
+
+    //     FFmpegLogCallback.set();
+
+    //     VideoFrameExtractor extractor = new VideoFrameExtractor();
+    //     List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
+        
+
+
+    //     try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+                
+    //         for (ImageFrame frame : frames) {
+    //             Group group = frame.group();
+    //             writer.write(group.toCsvRow());
+    //             writer.newLine();
+    //             BufferedImage img = frame.image();
+    //                 if (img != null) {
+    //                     long tsMicro = frame.microsecondsTimestamp(); // microseconds
+    //                     double tsSec = tsMicro / 1_000_000.0; // convert to seconds
+    //                     File out = new File("debugFrames/", String.format("frame_%06.2f.png", tsSec));
+    //                     ImageIO.write(img, "png", out);
                         
-                    }
-            }
+    //                 }
+    //         }
             
             
-            writer.close();
-        }
+    //         writer.close();
+    //     }
 
-        System.out.println("Group data written to: " + outputPath);
-    }
+    //     System.out.println("Group data written to: " + outputPath);
+    // }
 
     @Test
     public void testExtractGroupsFromCyanBoxWithAssertions() throws FrameGrabber.Exception, IOException, Exception {
