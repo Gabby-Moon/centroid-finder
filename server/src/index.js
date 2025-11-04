@@ -17,8 +17,9 @@ app.use('/thumbnails', express.static(path.resolve(process.env.THUMBNAIL_DIR)));
 app.use('/results', express.static(path.resolve(process.env.RESULT_DIR)));
 
 // in-memory job tracker
-// jobId -> { videoName, status, process }
-const jobs = new Map();
+// jobId -> { videoName, status, process, UUID }
+// const jobs = new Map();
+// jobID { videoName: filename, }
 
 // root test location
 app.get('/', (req, res) => {
