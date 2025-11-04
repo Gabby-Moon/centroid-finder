@@ -43,7 +43,7 @@ export async function generateThumbnail(videoPath, thumbnailPath) {
             if (code === 0) {
                 resolve();
             } else {
-                reject(new Error(`Java process exited with code ${code}`));
+                reject(new Error(`Java process exited with code ${code}.`));
             }
         });
 

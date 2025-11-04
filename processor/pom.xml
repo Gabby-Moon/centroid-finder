@@ -44,7 +44,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <mainClass>io.github.GabbyMoon.centroidfinder.VideoProcessingApp</mainClass>
+          <mainClass>io.github.GabbyMoon.centroidfinder.Start</mainClass>
         </configuration>
       </plugin>
       <!-- Assembly -->
@@ -57,7 +57,7 @@
               <appendAssemblyId>false</appendAssemblyId> 
               <archive>
                   <manifest>
-                      <mainClass>io.github.GabbyMoon.centroidfinder.VideoProcessingApp</mainClass>
+                      <mainClass>io.github.GabbyMoon.centroidfinder.Start</mainClass>
                   </manifest>
               </archive>
               <descriptorRefs>
