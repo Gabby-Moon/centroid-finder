@@ -10,9 +10,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class ThumbnailsProcessingApp {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String inputPath = args[0];
+
         String outputPath = args[1];
+
 
         try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputPath)) {
             grabber.start();
@@ -29,6 +31,10 @@ public class ThumbnailsProcessingApp {
 
             grabber.stop();
             converter.close();
+        } catch (Exception e) {
+            System.out.println("Output Path: " + outputPath);
+            System.out.println("Input Path: " + inputPath);
+            e.printStackTrace();
         }
     }
 } 

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const jarPath = path.resolve(__dirname, '../../../processor/target/videoprocessor.jar');
 
 
 
@@ -26,10 +27,7 @@ export async function fetchThumbnail(filename, videoDir, thumbnailDir) {
 
 export async function generateThumbnail(videoPath, thumbnailPath) {
  return new Promise((resolve, reject) => {
-        const jarPath = path.resolve(__dirname, '../processor/target/videoprocessor.jar');
-        const mainClass = 'io.github.GabbyMoon.centroidfinder.ThumbnailsProcessingApp';
-
-        const java = spawn('java', ['-cp', jarPath, mainClass, videoPath, thumbnailPath]);
+        const java = spawn('java', ['-jar', jarPath, videoPath, thumbnailPath]);
 
         java.stdout.on('data', (data) => {
             console.log(`Java stdout: ${data}`);
