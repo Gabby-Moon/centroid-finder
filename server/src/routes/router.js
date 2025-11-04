@@ -2,6 +2,7 @@ import {Router} from 'express';
 import fs from 'fs';
 import path from 'path';
 import {getThumbnail} from '../controllers/controller.js';
+import crypto from "crypto";
 
 const router = Router();
 
@@ -33,7 +34,35 @@ router.get('/thumbnail/:filename', (req, res) => {
     getThumbnail(req, res, { videoDir, thumbnailDir });
 });
 
+router.get('/process/:jobId/status', (req, res) => {
+    //need to differentiate the sends
+    
+    // res.status(200).json({status: 'processing'});
+    // res.status(200).json({status: 'done', result: ""});
+    // res.status(200).json({status: 'error', error: 'Error processing video: Unexpected ffmpeg error'});
+    // res.status(404).json({error: 'Job ID not found'});
+    res.status(500).json({error: 'Error fetching job status'});
+});
+
 //post
+router.post('/process/:filename', (req, res) => {
+    const color = req.query.targetColor;
+    const threshold = req.query.threshold;
+    if(!color || !threshold) {
+        res.status(400).json({error: 'Missing targetColor or threshold query parameter.'});
+    }
+
+    //call jar on video
+
+    try {
+        const videoID = crypto.randomUUID();
+
+        res.status(202).json({jobId: videoID});
+    } catch(err) {
+        console.log('Error: ' + err);
+        res.status(500).json({error: 'Error starting job'});
+    }
+})
 
 //put
 
