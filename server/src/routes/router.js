@@ -27,11 +27,17 @@ router.get('/videos', async (req, res) => {
 })
 
 // just going to use ffmpeg for this since it's part of the javacv anyway and is faster
-router.get('/thumbnail/:filename', (req, res) => {
+router.get('/thumbnail/:filename', async (req, res) => {
     const videoDir = path.resolve(process.env.VIDEO_DIR);
     const thumbnailDir = path.resolve(process.env.THUMBNAIL_DIR);
-
-    getThumbnail(req, res, { videoDir, thumbnailDir });
+    const {filename} = req.params;
+    
+    try {
+        const thumbnailPath = await getThumbnail(filename, videoDir, thumbnailDir)
+        return res.status(200).sendFile(thumbnailPath, { headers: { 'Content-Type': 'image/jpeg' } });
+    } catch (err) {
+        return res.status(500).json({error: "Error generating thumbnail"})
+    }
 });
 
 router.get('/process/:jobId/status', (req, res) => {

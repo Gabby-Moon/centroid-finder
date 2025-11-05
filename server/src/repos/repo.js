@@ -17,7 +17,7 @@ export async function fetchThumbnail(filename, videoDir, thumbnailDir) {
     const thumbnailPath = path.resolve(thumbnailDir, baseName + '.jpg');
 
     try {
-        await fs.stat(thumbnailPath); // exists
+        await fs.access(thumbnailPath); // exists
     } catch {
         await generateThumbnail(videoPath, thumbnailPath);
     }
