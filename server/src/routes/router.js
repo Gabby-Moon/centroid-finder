@@ -49,7 +49,7 @@ router.get('/process/:jobId/status', (req, res) => {
                 return res.status(200).json({ status: 'processing' });
 
             case 'done':
-                return res.status(200).json({ status: 'done', result: job.resultPath });
+                return res.status(200).json({ status: 'done', result: job.result });
 
             case 'error':
                 return res.status(200).json({ status: 'error', error: job.error || 'Unknown error' });

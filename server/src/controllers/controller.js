@@ -1,7 +1,6 @@
 import {getJob, setJob, deleteJob} from '../repos/repo.js';
 import {spawn} from 'child_process';
 import { fileURLToPath } from 'url';
-import fs from 'fs/promises';
 import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,33 +18,38 @@ export async function getThumbnail(filename, videoDir, thumbnailDir) {
 
 export function startVideoProcessing(filename, color, threshold, jobId, videoDir, resultsDir) {
     const videoPath = path.join(videoDir, filename);
-    const outputPath = path.join(resultsDir, filename.replace(/\.[^/.]+$/, '.csv'));
-    const jarPath = path.re
+    const outputPath = path.resolve(resultsDir, filename.replace(/\.[^/.]+$/, '.csv'));
 
-    setJob(jobId, {status: 'processing'});
+    setJob(jobId, { status: 'processing' });
 
     const javaArgs = [
         '-jar',
-        jarPath,       // path to the .jar file
-        videoPath,     // args[0] → inputPath
-        outputPath,    // args[1] → outputPath
-        color,         // args[2] → targetColorInput
-        threshold      // args[3] → thresholdInput
+        jarPath,        // fixed: use resolved jarPath
+        videoPath,
+        outputPath,
+        color.toString(),
+        threshold.toString()
     ];
 
     const javaProcess = spawn('java', javaArgs);
 
+    javaProcess.stdout.on('data', (data) => console.log(`Java stdout: ${data}`));
+    javaProcess.stderr.on('data', (data) => console.error(`Java stderr: ${data}`));
+
     javaProcess.on('close', (code) => {
-        if (code == 0) {
-            setJob(jobId, {status: 'done', result: outputPath})
+        if (code === 0) {
+            const resultUrl = `/results/${filename.replace(/\.[^/.]+$/, '.csv')}`;
+            setJob(jobId, { status: 'done', result: resultUrl });
+            console.log('Job completed! Result file URL:', resultUrl);
         } else {
-            const errMsg = `Error processing video: Exited with code ${code}` 
+            const errMsg = `Error processing video: Exited with code ${code}`;
             setJob(jobId, { status: 'error', error: errMsg });
+            console.error(errMsg);
         }
     });
 
     javaProcess.on('error', (err) => {
-        const errMsg = `Error processing video: ${err.message}`
+        const errMsg = `Error processing video: ${err.message}`;
         setJob(jobId, { status: 'error', error: errMsg });
     });
 }

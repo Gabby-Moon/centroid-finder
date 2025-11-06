@@ -7,7 +7,7 @@ import org.bytedeco.javacv.FrameGrabber;
 public class VideoProcessingApp {
     public static void main(String[] args) {
         if (args.length < 4) {
-            System.out.println("Usage: java VideoProcessingApp <input_video_path> <output_csv_path> <hex_target_color> <threshhold>");
+            System.out.println("Usage: java VideoProcessingApp <input_video_path> <output_csv_path> <hex_target_color> <threshold>");
             return;
         }
 
