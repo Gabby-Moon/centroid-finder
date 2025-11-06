@@ -1,13 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
-import {spawn} from 'child_process';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const jarPath = path.resolve(__dirname, '../../../processor/target/videoprocessor.jar');
 
 
+
+
+const jobsMap = new Map();
 
 export async function fetchThumbnail(filename, videoDir, thumbnailDir) {
     // Remove any extension when we're looking for thumbnail since it's unclear if we're selecting video or image
@@ -25,30 +22,16 @@ export async function fetchThumbnail(filename, videoDir, thumbnailDir) {
     return thumbnailPath;
 }
 
-export async function generateThumbnail(videoPath, thumbnailPath) {
- return new Promise((resolve, reject) => {
-        const java = spawn('java', ['-jar', jarPath, videoPath, thumbnailPath]);
 
-        java.stdout.on('data', (data) => {
-            console.log(`Java stdout: ${data}`);
-        });
 
-        java.stderr.on('data', (data) => {
-            console.error(`Java stderr: ${data}`);
-        });
-
-        java.on('close', (code) => {
-            if (code === 0) {
-                resolve();
-            } else {
-                reject(new Error(`Java process exited with code ${code}.`));
-            }
-        });
-
-        java.on('error', (err) => {
-            reject(new Error(`Failed to start Java process: ${err.message}`));
-        });
-    });
-
+export function setJob(jobId, jobObject) {
+    jobsMap.set(jobId, jobObject);
 }
 
+export function getJob(jobId) {
+    return jobsMap.get(jobId);
+}
+
+export function deleteJob(jobId) {
+    jobsMap.delete(jobId);
+}
