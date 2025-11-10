@@ -1,4 +1,4 @@
-import {getJob, setJob, deleteJob} from '../repos/repo.js';
+import {getJob, setJob, deleteJob, fetchThumbnailNode} from '../repos/repo.js';
 import {spawn} from 'child_process';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -8,7 +8,7 @@ const jarPath = path.resolve(__dirname, '../../../processor/target/videoprocesso
 
 export async function getThumbnail(filename, videoDir, thumbnailDir) {
     try {
-        const thumbnailPath = await fetchThumbnail(filename, videoDir, thumbnailDir);
+        const thumbnailPath = await fetchThumbnailNode(filename, videoDir, thumbnailDir);
         return thumbnailPath;
     } catch (err) {
         console.error('Unable to fetch thumbnail: ', err);
@@ -58,7 +58,7 @@ export function checkJob(jobId) {
     return getJob(jobId); // returns {status, resultPath?, error?}
 }
 
-export async function fetchThumbnail(videoPath, thumbnailPath) {
+export async function fetchThumbnailJava(videoPath, thumbnailPath) {
  return new Promise((resolve, reject) => {
         const java = spawn('java', ['-jar', jarPath, videoPath, thumbnailPath]);
 
