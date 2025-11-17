@@ -12,9 +12,9 @@ app.use(express.json());
 app.use('/api', routes);
 
 // static file locations setup
-app.use('/videos', express.static(path.resolve(process.env.VIDEO_DIR)));
-app.use('/thumbnails', express.static(path.resolve(process.env.THUMBNAIL_DIR)));
-app.use('/results', express.static(path.resolve(process.env.RESULT_DIR)));
+app.use('/videos', express.static(path.resolve(process.env.VIDEO_DIRECTORY)));
+app.use('/thumbnails', express.static(path.resolve(process.env.THUMBNAIL_DIRECTORY)));
+app.use('/results', express.static(path.resolve(process.env.RESULTS_DIRECTORY)));
 
 // in-memory job tracker
 // jobId -> { videoName, status, process, UUID }
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 // app.get('/test-files', (req, res) => {
 //   try {
 //     const videoFiles = fs.readdirSync(path.resolve(process.env.VIDEO_DIR));
-//     const thumbnailFiles = fs.readdirSync(path.resolve(process.env.THUMBNAIL_DIR));
+//     const thumbnailFiles = fs.readdirSync(path.resolve(process.env.THUMBNAIL_DIRECTORY));
 
 //     res.json({
 //       videos: videoFiles,

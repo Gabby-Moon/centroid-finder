@@ -1,0 +1,19 @@
+# Node modules (reinstall in Docker)
+server/node_modules
+server/npm-debug.log
+
+# Local environment files
+server/.env
+
+# Logs
+*.log
+
+# OS / IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Optional: temporary or backup files
+*.tmp
+*.bak

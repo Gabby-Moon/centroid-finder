@@ -2,9 +2,8 @@ import {getJob, setJob, deleteJob, fetchThumbnailNode} from '../repos/repo.js';
 import {spawn} from 'child_process';
 import { fileURLToPath } from 'url';
 import path from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const jarPath = path.resolve(__dirname, '../../../processor/target/videoprocessor.jar');
+
+const jarPath = process.env.JAR_PATH || path.resolve(__dirname, '../../../processor/target/videoprocessor.jar');
 
 export async function getThumbnail(filename, videoDir, thumbnailDir) {
     try {

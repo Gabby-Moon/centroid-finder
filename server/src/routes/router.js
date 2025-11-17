@@ -3,17 +3,14 @@ import fs from 'fs';
 import path from 'path';
 import {getThumbnail, startVideoProcessing, checkJob} from '../controllers/controller.js';
 import crypto from "crypto";
+import { fileURLToPath } from 'url';
 
 const router = Router();
 
-// server files
-const videoDir = path.resolve(process.env.VIDEO_DIR);
-const thumbnailDir = path.resolve(process.env.THUMBNAIL_DIR);
-const resultsDir = path.resolve(process.env.RESULT_DIR);
-
-// maven
-const JAR_PATH = path.resolve(process.env.JAR_PATH || '../../processor/target/videoProcessor.jar');
-const MAVEN_PROJECT_DIR = path.resolve(process.env.MAVEN_PROJECT_DIR || '../../processor');
+const videoDir = process.env.VIDEO_DIRECTORY;
+const thumbnailDir = process.env.THUMBNAIL_DIRECTORY;
+const resultsDir = process.env.RESULTS_DIRECTORY;
+const jarPath = process.env.JAR_PATH;
 
 //get
 router.get('/videos', async (req, res) => {
