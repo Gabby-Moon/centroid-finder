@@ -1,6 +1,7 @@
 Refactoring
 - Remove unused files/classes: For example, VideoExperiment.java appears unused and could be deleted.
 - Clean up commented code: There are many commented-out blocks, especially in test files and some main classes. Remove or clarify these.
+- Refactor large classes/methods into smaller, focused units (e.g., in FrameProcessor.java).
 
 Security
 - Restrict file uploads to allowed types and sizes.
