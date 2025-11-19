@@ -1,0 +1,26 @@
+- refactoring code (required)
+    - processor
+        - remove video experiments.java (unused)
+        - remove unused record file
+        - cleaning up commented out code
+        - removing stat
+    - server
+        - removing static folder (using top level in docker)
+- adding tests (required)
+    - adding more tests for thumbnails processing
+- improving error handling (required)
+    - better error handling for thumbnails
+    - doing more validation for checking video/image files
+    - check and resolve places where Exception e is used to improve based on exception type
+- writing documentation (required)
+    - adding documentation for java files
+    - adding documentation for server files
+- improving performance (optional)
+    - find a way to minify node.js?
+- hardening security (optional)
+    - update everything to Java 25 compatibility
+- bug fixes (optional)
+    - clarify if the API route is every route for the Salmander API or only the api/videos route
+- other (optional)
+    - quiet ffmpeg avutil.AV_LOG_QUIET
+      (https://bytedeco.org/javacpp-presets/ffmpeg/apidocs/org/bytedeco/ffmpeg/presets/avutil.html)
