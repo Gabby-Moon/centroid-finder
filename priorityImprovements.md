@@ -4,7 +4,7 @@ Refactoring code (required)
 
 Adding test (required)
 - Adding test for Thumbnail processing
-- Tests for edge casing
+- Tests for edge casing (Gabby)
 
 Improving error handling (required)
 - Thumbnail Error handling
@@ -12,7 +12,7 @@ Improving error handling (required)
 
 Writing documentation (required)
 - Adding documentation for server and program
-- Making a proper README file for the server and file
+- Making a proper README file for the server and file (Gabby)
 
 Improving performance (optional)
 - find a way to minify node.js?
@@ -23,7 +23,7 @@ Hardening security (optional)
 - update everything to Java 25 compatibility
 
 Bug fixes (optional)
-- clarify if the API route is every route for the Salmander API or only the api/videos route
+- clarify if the API route is every route for the Salmander API or only the api/videos route (Gabby)
 - Thumbnail hanging without video
 
 Other (optional)
