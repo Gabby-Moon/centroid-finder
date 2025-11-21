@@ -13,7 +13,7 @@ const resultsDir = process.env.RESULTS_DIRECTORY;
 const jarPath = process.env.JAR_PATH;
 
 //get
-router.get('/videos', async (req, res) => {
+router.get('/api/videos', async (req, res) => {
     try {
         const files = await fs.promises.readdir(videoDir);
         res.status(200).json(files);
