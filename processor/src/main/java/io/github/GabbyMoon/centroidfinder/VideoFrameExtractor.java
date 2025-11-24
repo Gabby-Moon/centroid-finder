@@ -44,7 +44,6 @@ public class VideoFrameExtractor {
             grabber.stop();
         }
 
-        // sort frames by timestamp
         Collections.sort(frames);
         return frames;
     }

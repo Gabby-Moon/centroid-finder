@@ -42,13 +42,11 @@ public class VideoProcessingApp {
             return;
         }
 
-        // pass the ImageFrame data to a writer process to write to csv
         if (frames != null && frames.size() > 0) {
            try {
              FrameListWriter.writeFramesToCsv(frames, outputPath);
              System.out.println("Timestamps and x, y coordinates saved to: " + outputPath);
            } catch (Exception e) {
-                // do something
                 System.err.println("Unable to save timestamps to: " + outputPath);
                 e.printStackTrace();
                 return;
