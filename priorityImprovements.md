@@ -1,17 +1,17 @@
 Refactoring code (required)
-- Getting rid of unused files and commented code
+- Getting rid of unused files and commented code (Ash)
 - Separating video processing
 
 Adding test (required)
-- Adding test for Thumbnail processing
+- Adding test for Thumbnail processing (Ash)
 - Tests for edge casing (Gabby)
 
 Improving error handling (required)
-- Thumbnail Error handling
+- Thumbnail Error handling (Ash)
 - Validating inputs before passing them in
 
 Writing documentation (required)
-- Adding documentation for server and program
+- Adding documentation for server and program (Ash)
 - Making a proper README file for the server and file (Gabby)
 
 Improving performance (optional)
