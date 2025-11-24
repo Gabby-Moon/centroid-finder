@@ -2,6 +2,7 @@ package io.github.GabbyMoon.centroidfinder;
 
 
 // format pulled from previous assignment
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import java.awt.image.BufferedImage;
@@ -71,5 +72,18 @@ public class BinarizingImageGroupFinderTest {
         List<Group> should = new ArrayList<>();
 
         Assertions.assertEquals(should, real);
+    }
+
+    @Test
+    void findConnectedGroupsNoImage() {
+        ColorDistanceFinder finder = new EuclideanColorDistance();
+        ImageBinarizer binarizer = new DistanceImageBinarizer(finder, 0xFAFAFA, 0);
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        BinarizingImageGroupFinder binaryGroupFinder = new BinarizingImageGroupFinder(binarizer, groupFinder);
+        BufferedImage image = null;
+
+        assertThrows(NullPointerException.class, () -> {
+            binaryGroupFinder.findConnectedGroups(image);
+        });
     }
 }
