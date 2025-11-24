@@ -1,5 +1,8 @@
 # centroid-finder
 
+## If you're looking for the documentation for the project
+[Click Here](DOCUMENTATION.md)
+
 ## *DO THIS FIRST* Wave 0: AI Rules 
 AI is *NOT ALLOWED* for generating implementations of the classes.
 AI is allowed for helping you make test cases.
