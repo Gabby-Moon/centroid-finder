@@ -139,6 +139,20 @@ class DfsBinaryGroupFinderTest {
         });
     }
 
+    @Test
+    void test_IllegalArgumentExceptionNegative(){
+        DfsBinaryGroupFinder dfsGroupFinder = new DfsBinaryGroupFinder();
+        int[][] image = {
+            {0,0,0},
+            {0,-1,0},
+            {0,0,0}
+        };;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            dfsGroupFinder.findConnectedGroups(image);
+        });
+    }
+
     Coordinate helper_CentroidFinder(List<Coordinate> pixelSet) {
         int xTotal = 0;
         int yTotal = 0;
