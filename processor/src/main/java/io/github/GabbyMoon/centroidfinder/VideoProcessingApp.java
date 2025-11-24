@@ -1,14 +1,13 @@
-package io.github.GabbyMoon.centroidfinder;
-
-import java.util.List;
-
-import org.bytedeco.javacv.FrameGrabber;
 /**
  * The VideoProcessingApp class serves as the main application for processing video files to find the largest group of connected pixels in each frame.
  * It extracts frames from the video, processes them using the FrameProcessor, and saves the results to a CSV file.
  * The application takes four command-line arguments: the input video path, the output CSV path, the target color in hexadecimal format, and the threshold for color distance.
  * The application validates the input arguments, extracts frames from the video, processes each frame to find the largest group of connected pixels, and saves the results to the specified CSV file.
  */
+package io.github.GabbyMoon.centroidfinder;
+import java.util.List;
+import org.bytedeco.javacv.FrameGrabber;
+
 public class VideoProcessingApp {
     /**
      * The main method of the VideoProcessingApp.

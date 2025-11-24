@@ -1,8 +1,3 @@
-import {getJob, setJob, deleteJob, fetchThumbnailNode} from '../repos/repo.js';
-import {spawn} from 'child_process';
-import { fileURLToPath } from 'url';
-import path from 'path';
-
 /**
  * Controller utilities for video processing and thumbnail generation.
  *
@@ -11,6 +6,12 @@ import path from 'path';
  * thumbnails, start background video processing jobs, check job status,
  * and invoke the Java thumbnail generator directly.
  */
+
+import {getJob, setJob, deleteJob, fetchThumbnailNode} from '../repos/repo.js';
+import {spawn} from 'child_process';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 
 // Path to the Java processor JAR. Can be overridden via the JAR_PATH env var.
 const jarPath = process.env.JAR_PATH || path.resolve(__dirname, '../../../processor/target/videoprocessor.jar');

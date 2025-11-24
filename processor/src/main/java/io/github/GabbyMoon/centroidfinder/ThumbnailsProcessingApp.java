@@ -1,14 +1,15 @@
+/**
+ * The ThumbnailsProcessingApp class is responsible for extracting a thumbnail image from a video file.
+ * It uses the FFmpegFrameGrabber to read the video and the Java2DFrameConverter to convert the video frame to a BufferedImage.
+ * The extracted thumbnail is then saved as a JPEG image to the specified output path.
+ */
 package io.github.GabbyMoon.centroidfinder;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-/**
- * The ThumbnailsProcessingApp class is responsible for extracting a thumbnail image from a video file.
- * It uses the FFmpegFrameGrabber to read the video and the Java2DFrameConverter to convert the video frame to a BufferedImage.
- * The extracted thumbnail is then saved as a JPEG image to the specified output path.
- */
+
 public class ThumbnailsProcessingApp {
     /**
      *  The main method of the ThumbnailsProcessingApp.

@@ -1,3 +1,11 @@
+/**
+ * A class that implements the BinaryGroupFinder interface to find connected groups of pixels in a binary image using depth-first search (DFS).
+ * The input is a non-empty rectangular 2D array containing only 1s and 0s. The method returns a list of Group objects representing the connected groups of pixels, sorted in descending order by size.
+ * Pixels are considered connected vertically and horizontally, NOT diagonally. The top-left cell of the array (row:0, column:0) is considered to be coordinate (x:0, y:0). Y increases downward and X increases to the right. For example, (row:4, column:7) corresponds to (x:7, y:4).
+ * The size of a group is the number of pixels in that group. The centroid of a group is computed as the average of the pixel coordinates in each dimension using integer division.
+ * For example, the x coordinate of the centroid is the sum of all x values divided by the number of pixels in the group, and similarly for the y coordinate.
+ * The groups are sorted in DESCENDING order according to Group's compareTo method.
+ */
 package io.github.GabbyMoon.centroidfinder;
 
 import java.util.ArrayList;

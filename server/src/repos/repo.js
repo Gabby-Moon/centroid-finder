@@ -1,7 +1,3 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { fetchThumbnailJava } from '../controllers/controller.js';
-
 /**
  * Repository module for managing video processing jobs and thumbnail generation.
  *
@@ -12,7 +8,9 @@ import { fetchThumbnailJava } from '../controllers/controller.js';
  * Thumbnail generation is performed via an external Java process (videoprocessor.jar).
  * Requires Java to be installed and accessible in the runtime environment.
  */
-
+import fs from 'fs/promises';
+import path from 'path';
+import { fetchThumbnailJava } from '../controllers/controller.js';
 
 /**
  * In-memory map to store job states.

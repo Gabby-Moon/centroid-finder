@@ -1,10 +1,3 @@
-import {Router} from 'express';
-import fs from 'fs';
-import path from 'path';
-import {getThumbnail, startVideoProcessing, checkJob} from '../controllers/controller.js';
-import crypto from "crypto";
-import { fileURLToPath } from 'url';
-
 /**
  * Express router for handling video processing and thumbnail generation routes.
  *
@@ -13,6 +6,13 @@ import { fileURLToPath } from 'url';
  * - Generating and retrieving thumbnails
  * - Starting video processing jobs
  */
+import {Router} from 'express';
+import fs from 'fs';
+import path from 'path';
+import {getThumbnail, startVideoProcessing, checkJob} from '../controllers/controller.js';
+import crypto from "crypto";
+import { fileURLToPath } from 'url';
+
 const router = Router();
 const videoDir = process.env.VIDEO_DIRECTORY;
 const thumbnailDir = process.env.THUMBNAIL_DIRECTORY;

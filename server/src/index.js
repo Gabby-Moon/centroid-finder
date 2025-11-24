@@ -1,7 +1,3 @@
-import 'dotenv/config'
-import express from "express";
-import path from 'path';
-import routes from './routes/router.js';
 /**
  * Main server entry point for the video processing application.
  *
@@ -30,6 +26,10 @@ import routes from './routes/router.js';
  * - Start processing: `POST http://localhost:3000/process/video.mp4?targetColor=255&threshold=50`
  * - Check job status: `GET http://localhost:3000/process/job-123/status`
  */
+import 'dotenv/config'
+import express from "express";
+import path from 'path';
+import routes from './routes/router.js';
 
 // set up express
 const app = express();

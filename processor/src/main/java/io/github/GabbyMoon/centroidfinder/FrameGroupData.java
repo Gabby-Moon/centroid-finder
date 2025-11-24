@@ -1,10 +1,11 @@
-package io.github.GabbyMoon.centroidfinder;
 /**
  * A record which represents the data for a single image frame, including the timestamp and the largest group of pixels from
  * a binarized image found in that frame. The timestamp is represented in nanoseconds, and the largest group is an instance of 
  * the Group class. This record implements the Comparable interface to allow sorting based on timestamp, then x-coordinate of 
  * the largest group's centroid, and finally y-coordinate of the largest group's centroid.
  */
+package io.github.GabbyMoon.centroidfinder;
+
 public record FrameGroupData(long timestamp, Group largestGroup) implements Comparable<FrameGroupData>{
     /**
      * Compares this FrameGroupData to another based on timestamp, then x-coordinate of the largest group's centroid,

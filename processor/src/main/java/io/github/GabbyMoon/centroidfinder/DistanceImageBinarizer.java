@@ -1,7 +1,3 @@
-package io.github.GabbyMoon.centroidfinder;
-
-import java.awt.image.BufferedImage;
-
 /**
  * An implementation of the ImageBinarizer interface that uses color distance
  * to determine whether each pixel should be black or white in the binary image.
@@ -13,6 +9,11 @@ import java.awt.image.BufferedImage;
  * The color distance is computed using a provided ColorDistanceFinder, which defines how to compare two colors numerically.
  * The targetColor is represented as a 24-bit RGB integer in the form 0xRRGGBB.
  */
+package io.github.GabbyMoon.centroidfinder;
+
+import java.awt.image.BufferedImage;
+
+
 public class DistanceImageBinarizer implements ImageBinarizer {
     private final ColorDistanceFinder distanceFinder;
     private final int threshold;

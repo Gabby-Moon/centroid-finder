@@ -1,9 +1,10 @@
-package io.github.GabbyMoon.centroidfinder;
-import java.awt.image.BufferedImage;
 /**
  * A record class representing a single frame of a video, containing the image data, timestamp in microseconds, timestamp in seconds, and the largest group of connected pixels found in the frame.
  * The class implements the Comparable interface to allow sorting based on the timestamp.
  */
+package io.github.GabbyMoon.centroidfinder;
+import java.awt.image.BufferedImage;
+
 public record ImageFrame(BufferedImage image, long microsecondsTimestamp, double secondsTimestamp, Group group) implements Comparable<ImageFrame> {
     /**
      * Constructs an ImageFrame with the given image, timestamp in microseconds, timestamp in seconds, and group data.

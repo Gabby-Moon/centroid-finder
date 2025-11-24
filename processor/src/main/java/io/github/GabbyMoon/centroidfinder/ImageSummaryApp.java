@@ -1,11 +1,3 @@
-package io.github.GabbyMoon.centroidfinder;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.List;
-import javax.imageio.ImageIO;
-
 /**
  * The Image Summary Application.
  * 
@@ -30,6 +22,14 @@ import javax.imageio.ImageIO;
  * Usage:
  *   java ImageSummaryApp <input_image> <hex_target_color> <threshold>
  */
+package io.github.GabbyMoon.centroidfinder;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.List;
+import javax.imageio.ImageIO;
+
 public class ImageSummaryApp {
     /**
      * The main method of the Image Summary Application.

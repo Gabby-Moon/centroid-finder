@@ -1,3 +1,8 @@
+/**
+ * The VideoFrameExtractor class is responsible for extracting frames from a video file and processing them to find the largest group of connected pixels in each frame.
+ * It uses the FFmpegFrameGrabber to read the video and the Java2DFrameConverter to convert the video frames to BufferedImages.
+ * The extracted frames are processed using the FrameProcessor to find the largest group of connected pixels, and the results are stored in a list of ImageFrame objects.
+ */
 package io.github.GabbyMoon.centroidfinder;
 
 import java.awt.image.BufferedImage;
@@ -9,11 +14,7 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.Frame;
-/**
- * The VideoFrameExtractor class is responsible for extracting frames from a video file and processing them to find the largest group of connected pixels in each frame.
- * It uses the FFmpegFrameGrabber to read the video and the Java2DFrameConverter to convert the video frames to BufferedImages.
- * The extracted frames are processed using the FrameProcessor to find the largest group of connected pixels, and the results are stored in a list of ImageFrame objects.
- */
+
 public class VideoFrameExtractor {
     /**
      * Extracts frames from a video file and processes them to find the largest group of connected pixels in each frame.

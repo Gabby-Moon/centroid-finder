@@ -1,8 +1,9 @@
-package io.github.GabbyMoon.centroidfinder;
 /**
  * The Start class serves as the entry point for the application.
  * It determines which application to run based on the number of command-line arguments provided.
  */
+package io.github.GabbyMoon.centroidfinder;
+
 public class Start {
     /**
      * The main method of the Start class.

@@ -1,12 +1,13 @@
-package io.github.GabbyMoon.centroidfinder;
-
-import java.util.List;
-import java.awt.image.BufferedImage;
 /**
  * A class responsible for processing a list of ImageFrame objects to find the largest group of connected pixels in each frame.
  * It uses a specified color distance threshold and target color to binarize the images and then identifies the largest group of connected pixels.
  * The results are stored in a list of FrameGroupData objects, which contain the timestamp and the largest group found in each frame.
  */
+package io.github.GabbyMoon.centroidfinder;
+
+import java.util.List;
+import java.awt.image.BufferedImage;
+
 public class FrameProcessor {
     private final List<ImageFrame> frames;
     private final ColorDistanceFinder finder = new EuclideanColorDistance();
