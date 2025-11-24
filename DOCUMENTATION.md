@@ -26,3 +26,22 @@ It gets a frame from the video and makes a ```.jpg``` from it for a thumbnail to
 It is much smaller due to the small task compared to the video processor.
 
 ## Server
+The server is an Express API, the folder contains tests and the server code. By default it uses ```3000``` for it's port.
+
+### paths
+```/api/videos```: Returns a ```.json``` of all the available videos.
+- gives a ```500``` if there is an error reading the directory  
+
+```/thumbnail/:filename```: Returns the thumbnail file of the given video name.
+- gives a ```500``` if it can't get the thumbnail
+
+```/process/:jobId/status```: returns the status of the job, can be done with a result, processing, or error with the error returned.
+- gives a ```404``` if there is no job with the given ```jobId```
+- gives a ```500``` if there was an error finding the job with the given ```jobId```
+
+```/process/:filename```: a post to start a job with the given file name. Needs to have color and threshold as a query parameter within the url.
+- gives a ```400``` if color or threshold is missing in the url
+- returns a ```202``` when it goes into processing and give the jobId
+- gives a ```500``` if there is an error with starting the job
+
+The job itself is async to avoid holding the user up with the long task, and changes the object with it's ```jobId``` to it's status.
