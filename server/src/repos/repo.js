@@ -43,7 +43,6 @@ export async function fetchThumbnailNode(filename, videoDir, thumbnailDir) {
         try {
             // Wait for the video file to be accessible before generating the thumbnail
             await waitForFile(videoPath);
-
             await fetchThumbnailJava(videoPath, thumbnailPath);
 
         } catch (err) {
@@ -96,7 +95,7 @@ export function deleteJob(jobId) {
  * @param {number} timeout - Maximum time in milliseconds to wait before rejecting (default: 10000ms).
  * @returns {Promise<void>} Resolves when the file exists, or rejects on timeout.
 */
-async function waitForFile(filePath, interval = 500, timeout = 10000) {
+async function waitForFile(filePath, interval = 500, timeout = 5000) {
     const start = Date.now();
 
     return new Promise((resolve, reject) => {

@@ -32,7 +32,7 @@ export async function getThumbnail(filename, videoDir, thumbnailDir) {
     try {
         console.log(`Fetching thumbnail for ${filename}...`);
         const thumbnailPath = await fetchThumbnailNode(filename, videoDir, thumbnailDir);
-        console.log(`Thumbnail ready at ${thumbnailPath}`);
+        console.log(`Thumbnail for ${filename} is ready at ${thumbnailPath}`);
         return thumbnailPath;
     } catch (err) {
         console.error(`Unable to fetch thumbnail for ${filename}:`, err);
