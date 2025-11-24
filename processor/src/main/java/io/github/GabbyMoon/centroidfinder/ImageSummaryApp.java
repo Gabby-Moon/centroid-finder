@@ -31,6 +31,14 @@ import javax.imageio.ImageIO;
  *   java ImageSummaryApp <input_image> <hex_target_color> <threshold>
  */
 public class ImageSummaryApp {
+    /**
+     * The main method of the Image Summary Application.
+     * 
+     * @param args Command-line arguments: <input_image> <hex_target_color> <threshold>
+     * @throws IllegalArgumentException if the number of arguments is incorrect or if the threshold is not an integer.
+     * @throws Exception if there are issues loading the image or writing the output files.
+     * @throws  NumberFormatException if the hex target color is not in the correct format.
+     */
     public static void main(String[] args) {
         if (args.length < 3) {
             System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
