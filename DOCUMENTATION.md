@@ -11,6 +11,14 @@ Used for finding the center of an object in a video and giving a ```.csv``` for 
 Running the ```ghcr.io/aashgray/salamander:latest``` to start the docker container will run the API. The API calls the ```.jar``` file for processing of the video and making the ```.csv```.  
 The project is being used as the back-end for a Salamander tracker.
 
+## Build
+The container is able to build the project through it's first base image then makes another base image to run the server, running the installs. Maven isn't required if you are just running the API but needed for modifying and running tests outside of the container.
+
+## Run
+To run the container you use ```docker run -p 3000:3000 -v $LOCAL_DRIVE/videos:/videos -v $LOCAL_DRIVE/results:/results -v $LOCAL_DRIVE/thumbnails:/thumbnails ghcr.io/aashgray/salamander:latest```  
+The local_drives are folders from your own pc containing the videos and thumbnails folders for the program to read and write to. It runs on port ```3000```.  
+**Windows: Use the ```\``` insted for the paths on your own pc but keep ```:/results``` & ```:/thumbnails``` & ```ghcr.io/aashgray/salamander:latest``` the same**
+
 ## Processor
 The processor contains the java code and a pom.xml for Maven to be able to run.  
 Contains tests for each of the ```.java``` files.  
