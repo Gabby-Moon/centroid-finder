@@ -1,16 +1,12 @@
+/**
+ * An implementation of the ImageGroupFinder interface that first binarizes a given image and then finds
+ * connected groups of white pixels using a BinaryGroupFinder.
+ */
 package io.github.GabbyMoon.centroidfinder;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-/**
- * An implementation of the ImageGroupFinder interface that first binarizes a given image and then finds
- * connected groups of white pixels using a BinaryGroupFinder.
- * 
- * This class uses an ImageBinarizer to convert an RGB image into a binary 2D array (where each pixel is either 0 or 1).
- * The BinaryGroupFinder is then applied to the binary array to locate connected groups of white pixels.
- * The connected groups are returned sorted in descending order based on the criteria defined in the Group record.
- */
 public class BinarizingImageGroupFinder implements ImageGroupFinder {
     private final ImageBinarizer binarizer;
     private final BinaryGroupFinder groupFinder;

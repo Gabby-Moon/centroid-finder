@@ -1,11 +1,11 @@
-package io.github.GabbyMoon.centroidfinder;
-
-import java.awt.image.BufferedImage;
-
 /**
  * An interface for converting between RGB images and binary (black-and-white) images.
  * A binary image is represented as a 2D array of integers, where each pixel is either 0 (black) or 1 (white).
  */
+package io.github.GabbyMoon.centroidfinder;
+
+import java.awt.image.BufferedImage;
+
 public interface ImageBinarizer {
 
     /**

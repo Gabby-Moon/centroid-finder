@@ -1,3 +1,11 @@
+/**
+ * Express router for handling video processing and thumbnail generation routes.
+ *
+ * This module defines the API endpoints for:
+ * - Fetching video file names
+ * - Generating and retrieving thumbnails
+ * - Starting video processing jobs
+ */
 import {Router} from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -6,13 +14,16 @@ import crypto from "crypto";
 import { fileURLToPath } from 'url';
 
 const router = Router();
-
 const videoDir = process.env.VIDEO_DIRECTORY;
 const thumbnailDir = process.env.THUMBNAIL_DIRECTORY;
 const resultsDir = process.env.RESULTS_DIRECTORY;
 const jarPath = process.env.JAR_PATH;
 
-//get
+/**
+ * GET /api/videos
+ * 
+ * Fetches a list of video file names from the video directory.
+ */
 router.get('/api/videos', async (req, res) => {
     try {
         const files = await fs.promises.readdir(videoDir);
@@ -23,6 +34,11 @@ router.get('/api/videos', async (req, res) => {
     }
 })
 
+/**
+ * GET /thumbnail/:filename
+ * 
+ * Retrieves or generates a thumbnail image for a given video file.
+ */
 router.get('/thumbnail/:filename', async (req, res) => {
     const {filename} = req.params;
     
@@ -34,6 +50,11 @@ router.get('/thumbnail/:filename', async (req, res) => {
     }
 });
 
+/**
+ * GET /process/:jobId/status
+ * 
+ * Retrieves the status of a video processing job by its jobId.
+ */
 router.get('/process/:jobId/status', (req, res) => {
     try {
         const job = checkJob(req.params.jobId);
@@ -61,6 +82,12 @@ router.get('/process/:jobId/status', (req, res) => {
 });
 
 //post
+/** 
+ * POST /process/:filename
+ * 
+ * Starts processing a video file with specified parameters.
+ * Expects query parameters: targetColor and threshold.
+ */
 router.post('/process/:filename', (req, res) => {
     const color = req.query.targetColor;
     const threshold = req.query.threshold;

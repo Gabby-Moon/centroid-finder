@@ -1,3 +1,6 @@
+/**
+ * Defines an interface for finding connected groups of pixels in a binary image.
+ */
 package io.github.GabbyMoon.centroidfinder;
 
 import java.util.List;

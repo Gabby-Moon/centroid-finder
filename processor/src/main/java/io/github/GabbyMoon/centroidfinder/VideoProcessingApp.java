@@ -1,10 +1,24 @@
+/**
+ * The VideoProcessingApp class serves as the main application for processing video files to find the largest group of connected pixels in each frame.
+ * It extracts frames from the video, processes them using the FrameProcessor, and saves the results to a CSV file.
+ * The application takes four command-line arguments: the input video path, the output CSV path, the target color in hexadecimal format, and the threshold for color distance.
+ * The application validates the input arguments, extracts frames from the video, processes each frame to find the largest group of connected pixels, and saves the results to the specified CSV file.
+ */
 package io.github.GabbyMoon.centroidfinder;
-
 import java.util.List;
-
 import org.bytedeco.javacv.FrameGrabber;
 
 public class VideoProcessingApp {
+    /**
+     * The main method of the VideoProcessingApp.
+     * It takes four command-line arguments: the input video path, the output CSV path, the target color in hexadecimal format, and the threshold for color distance.
+     * The method validates the input arguments, extracts frames from the video, processes each frame to find the largest group of connected pixels, and saves the results to the specified CSV file.
+      * @param args Command-line arguments: <input_video_path> <output_csv_path> <hex_target_color> <threshold>
+      * @throws NumberFormatException if the hex target color is not in the correct format or if the threshold is not an integer.
+      * @throws FrameGrabber.Exception if there is an error grabbing frames from the video.
+      * @throws IllegalArgumentException if the number of arguments is incorrect or if the threshold is not an integer.
+      * @throws Exception if there are issues loading the video or writing the output files.
+     */
     public static void main(String[] args) {
         if (args.length < 4) {
             System.out.println("Usage: java VideoProcessingApp <input_video_path> <output_csv_path> <hex_target_color> <threshold>");
