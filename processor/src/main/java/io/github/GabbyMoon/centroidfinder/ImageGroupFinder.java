@@ -1,3 +1,7 @@
+/**
+ * The ImageGroupFinder interface defines a method for finding connected groups of pixels in a BufferedImage.
+ * Implementations of this interface will provide different algorithms for identifying connected groups.
+ */
 package io.github.GabbyMoon.centroidfinder;
 
 import java.util.List;

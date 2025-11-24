@@ -1,5 +1,3 @@
-package io.github.GabbyMoon.centroidfinder;
-
 /**
  * Represents a group of contiguous pixels in an image.
  * The top-left cell of the array (row:0, column:0) is considered to be coordinate (x:0, y:0).
@@ -16,6 +14,8 @@ package io.github.GabbyMoon.centroidfinder;
  * then by the x coordinate of the centroid, and finally by the y coordinate.
  * In a method that returns groups, they should be sorted in this natural order.
  */
+package io.github.GabbyMoon.centroidfinder;
+
 public record Group(int size, Coordinate centroid) implements Comparable<Group> {
 
     /**

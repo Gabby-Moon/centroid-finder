@@ -1,12 +1,8 @@
-package io.github.GabbyMoon.centroidfinder;
-
 /**
  * Defines an interface for computing the distance between two colors.
- * 
- * Colors are typically represented as 24-bit RGB integers in the format 0xRRGGBB, where each pair of hexadecimal
- * digits corresponds to the red, green, and blue components of the color.
- * Implementations of this interface should provide a method to compute a numeric distance between two colors.
  */
+package io.github.GabbyMoon.centroidfinder;
+
 public interface ColorDistanceFinder {
     /**
      * Computes the distance between two colors.
