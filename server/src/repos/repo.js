@@ -5,17 +5,16 @@ import { fetchThumbnailJava } from '../controllers/controller.js';
 const jobsMap = new Map();
 
 export async function fetchThumbnailNode(filename, videoDir, thumbnailDir) {
-    // Remove any extension when we're looking for thumbnail since it's unclear if we're selecting video or image
-    const baseName = path.parse(filename).name; // "moving_cyan_video" from "moving_cyan_video.mp4" or "moving_cyan_video.jpg"
+    const baseName = path.parse(filename).name;
     
     const videoPath = path.resolve(videoDir, filename);
     const thumbnailPath = path.resolve(thumbnailDir, baseName + '.jpg');
 
     try {
-        await fs.access(thumbnailPath); // exists
+        await fs.access(thumbnailPath);
     } catch {
         try {
-            await waitForFile(videoPath); // safely waits only for this job
+            await waitForFile(videoPath);
             await fetchThumbnailJava(videoPath, thumbnailPath);
         } catch (err) {
             console.error("Unable to generate thumbnail", err);
@@ -45,12 +44,12 @@ async function waitForFile(filePath, interval = 500, timeout = 10000) {
         const check = async () => {
             try {
                 await fs.access(filePath);
-                resolve(); // File exists
+                resolve();
             } catch {
                 if (Date.now() - start > timeout) {
                     reject(new Error(`Timeout waiting for file: ${filePath}`));
                 } else {
-                    setTimeout(check, interval); // schedule next check
+                    setTimeout(check, interval);
                 }
             }
         };

@@ -23,7 +23,7 @@ export function startVideoProcessing(filename, color, threshold, jobId, videoDir
 
     const javaArgs = [
         '-jar',
-        jarPath,        // fixed: use resolved jarPath
+        jarPath,
         videoPath,
         outputPath,
         color.toString(),
@@ -54,7 +54,7 @@ export function startVideoProcessing(filename, color, threshold, jobId, videoDir
 }
 
 export function checkJob(jobId) {
-    return getJob(jobId); // returns {status, resultPath?, error?}
+    return getJob(jobId);
 }
 
 export async function fetchThumbnailJava(videoPath, thumbnailPath) {

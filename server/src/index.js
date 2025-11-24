@@ -16,32 +16,10 @@ app.use('/videos', express.static(path.resolve(process.env.VIDEO_DIRECTORY)));
 app.use('/thumbnails', express.static(path.resolve(process.env.THUMBNAIL_DIRECTORY)));
 app.use('/results', express.static(path.resolve(process.env.RESULTS_DIRECTORY)));
 
-// in-memory job tracker
-// jobId -> { videoName, status, process, UUID }
-// const jobs = new Map();
-// jobID { videoName: filename, }
-
 // root test location
 app.get('/', (req, res) => {
   res.status(200).send('Server is running!');
 });
-
-// // Test endpoint to list videos and thumbnails
-// import fs from 'fs';
-// app.get('/test-files', (req, res) => {
-//   try {
-//     const videoFiles = fs.readdirSync(path.resolve(process.env.VIDEO_DIR));
-//     const thumbnailFiles = fs.readdirSync(path.resolve(process.env.THUMBNAIL_DIRECTORY));
-
-//     res.json({
-//       videos: videoFiles,
-//       thumbnails: thumbnailFiles,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Failed to read directories' });
-//   }
-// });
 
 // start server
 app.listen(PORT, () => {
