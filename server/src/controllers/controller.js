@@ -30,10 +30,12 @@ const jarPath = process.env.JAR_PATH || path.resolve(__dirname, '../../../proces
  */
 export async function getThumbnail(filename, videoDir, thumbnailDir) {
     try {
+        console.log(`Fetching thumbnail for ${filename}...`);
         const thumbnailPath = await fetchThumbnailNode(filename, videoDir, thumbnailDir);
+        console.log(`Thumbnail ready at ${thumbnailPath}`);
         return thumbnailPath;
     } catch (err) {
-        console.error('Unable to fetch thumbnail: ', err);
+        console.error(`Unable to fetch thumbnail for ${filename}:`, err);
         throw new Error("Error generating thumbnail");
     }
 }
@@ -128,14 +130,20 @@ export async function fetchThumbnailJava(videoPath, thumbnailPath) {
             console.log(`Java stdout: ${data}`);
         });
 
+
         java.stderr.on('data', (data) => {
             console.error(`Java stderr: ${data}`);
         });
 
         java.on('close', (code) => {
             if (code === 0) {
+                console.log(`Java process completed successfully.`);
                 resolve();
             } else {
+                console.error(`Java process exited with code ${code}.`);
+                console.error(`Failed to generate thumbnail for ${videoPath} using Java process at ${jarPath}`);
+                console.error(`Expected thumbnail at ${thumbnailPath}`);
+
                 reject(new Error(`Java process exited with code ${code}.`));
             }
         });

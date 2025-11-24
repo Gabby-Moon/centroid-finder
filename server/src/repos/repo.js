@@ -41,10 +41,16 @@ export async function fetchThumbnailNode(filename, videoDir, thumbnailDir) {
         await fs.access(thumbnailPath);
     } catch {
         try {
+            // Wait for the video file to be accessible before generating the thumbnail
             await waitForFile(videoPath);
+
             await fetchThumbnailJava(videoPath, thumbnailPath);
+
         } catch (err) {
-            console.error("Unable to generate thumbnail", err);
+            console.error(`Error generating thumbnail for ${filename}:`, err);
+            console.error(`Video path: ${videoPath}`);
+            console.error(`Thumbnail path: ${thumbnailPath}`);
+            console.error(`Using JAR: ${process.env.JAR_PATH || 'default path'}`);
             throw new Error("Unable to generate thumbnail");
         }
     }
