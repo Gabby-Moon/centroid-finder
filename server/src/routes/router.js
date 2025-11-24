@@ -43,7 +43,7 @@ router.get('/thumbnail/:filename', async (req, res) => {
     const {filename} = req.params;
     
     try {
-        const thumbnailPath = await getThumbnail(filename, videoDir, thumbnailDir, videoDir, resultsDir);
+        const thumbnailPath = await getThumbnail(filename, videoDir, thumbnailDir);
         return res.status(200).sendFile(thumbnailPath, { headers: { 'Content-Type': 'image/jpeg' } });
     } catch (err) {
         return res.status(500).json({error: "Error generating thumbnail"})
