@@ -1,10 +1,6 @@
 package io.github.GabbyMoon.centroidfinder;
-
-// JavaCV
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
-
-// Java AWT and IO
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
