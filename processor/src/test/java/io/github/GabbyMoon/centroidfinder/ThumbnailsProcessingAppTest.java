@@ -14,42 +14,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ThumbnailsProcessingAppTest {
 
-    @Test
-    void testMain_createsThumbnailFromVideo() throws Exception {
-        // Relative to centroid-finder/processor
-        // String inputPath = "../server/src/static/videos/moving_cyan_video.mp4";
-        // String outputPath = "../server/src/static/thumbnails/moving_cyan_video.jpg";
+@Test
+void testMain_createsThumbnailFromVideo() throws Exception {
+    // Paths relative to centroid-finder/processor
+    String inputPath = "../videos/testing_square.mp4";
+    String outputPath = "../thumbnails/testing_square.jpg";
 
-        String inputPath = "../../videos/moving_cyan_video.mp4";
-        String outputPath = "../../thumbnails/moving_cyan_video.jpg";
-
-        File inputFile = new File(inputPath);
-        File outputFile = new File(outputPath);
-        File outputFolder = outputFile.getParentFile();
-
-        // Assert folder exists
-        assertTrue(outputFolder.exists() && outputFolder.isDirectory(), "Thumbnails folder not found: " + outputFolder.getPath());
-
-        // Assert input file exists
-        assertTrue(inputFile.exists() && inputFile.isFile(), "Input video file not found: " + inputPath);
-
-        // Clean up output if it exists
-        if (outputFile.exists()) {
-            assertTrue(outputFile.delete(), "Failed to delete existing thumbnail");
-        }
-
-        // Execute
-        ThumbnailsProcessingApp.main(new String[]{inputPath, outputPath});
-
-        // Verify output
-        assertTrue(outputFile.exists(), "Thumbnail was not created");
-        assertTrue(outputFile.length() > 0, "Thumbnail file is empty");
-
-        BufferedImage img = ImageIO.read(outputFile);
-        assertNotNull(img, "Thumbnail image could not be read");
-        assertTrue(img.getWidth() > 0, "Thumbnail width should be > 0");
-        assertTrue(img.getHeight() > 0, "Thumbnail height should be > 0");
+    // Ensure output folder exists
+    Path outputFolder = Path.of(outputPath).getParent();
+    if (!Files.exists(outputFolder)) {
+        Files.createDirectories(outputFolder);
     }
+
+    // Assert input file exists
+    Path inputFile = Path.of(inputPath);
+    assertTrue(Files.exists(inputFile) && Files.isRegularFile(inputFile),
+            "Input video file not found: " + inputPath);
+
+    // Clean up output if it exists
+    Path outputFile = Path.of(outputPath);
+    if (Files.exists(outputFile)) {
+        Files.delete(outputFile);
+    }
+
+    // Execute the main method
+    ThumbnailsProcessingApp.main(new String[]{inputPath, outputPath});
+
+    // Verify output
+    assertTrue(Files.exists(outputFile), "Thumbnail was not created");
+    assertTrue(Files.size(outputFile) > 0, "Thumbnail file is empty");
+
+    BufferedImage img = ImageIO.read(outputFile.toFile());
+    assertNotNull(img, "Thumbnail image could not be read");
+    assertTrue(img.getWidth() > 0, "Thumbnail width should be > 0");
+    assertTrue(img.getHeight() > 0, "Thumbnail height should be > 0");
+}
 
   @Test
     void testGenerateThumbnailSuccess() throws Exception {
