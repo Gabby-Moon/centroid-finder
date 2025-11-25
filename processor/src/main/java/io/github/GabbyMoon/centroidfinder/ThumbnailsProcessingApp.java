@@ -8,6 +8,8 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 public class ThumbnailsProcessingApp {
@@ -21,30 +23,52 @@ public class ThumbnailsProcessingApp {
      * @throws IllegalArgumentException if the number of arguments is incorrect.
      */  
     public static void main(String[] args) {
-        String inputPath = args[0];
+        if (args.length != 2) {
+            System.err.println("Usage: java ThumbnailsProcessingApp <input_video> <output_thumbnail>");
+            System.exit(1);
+        }
+        
+        String inputString = args[0];
+        String outputString = args[1];
 
-        String outputPath = args[1];
+        File inputFile = new File(inputString);
+        if (!inputFile.exists() || !inputFile.isFile()) {
+            System.err.println("Input video file not found: " + inputString);
+            System.exit(2);
+        }
+        
+        try {
+            generateThumbnail(inputString, outputString);
+        } catch (FFmpegFrameGrabber.Exception e) {
+            System.err.println("Error grabbing frames from video file: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(3);
+        }  catch (IOException e) {
+            System.err.println("Error writing thumbnail image: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(4);
+        }
+    }
 
-
-        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputPath)) {
+    public static void generateThumbnail(String inputString, String outputString) throws IOException, FFmpegFrameGrabber.Exception {
+        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(inputString);
+             Java2DFrameConverter converter = new Java2DFrameConverter()) {
+            
             grabber.start();
 
-            Java2DFrameConverter converter = new Java2DFrameConverter();
             BufferedImage frame = converter.convert(grabber.grabImage());
 
-            if (frame != null) {
-                ImageIO.write(frame, "jpg", new File(outputPath));
-                System.out.println("Thumbnail saved to " + outputPath);
-            } else {
-                System.err.println("No image frame found in video.");
+            if (frame == null) {
+                grabber.stop();
+                converter.close();
+                throw new IOException("No frames could be grabbed from the video.");
             }
+            
+            ImageIO.write(frame, "jpg", new File(outputString));
+            System.out.println("Thumbnail saved to " + outputString);
 
             grabber.stop();
             converter.close();
-        } catch (Exception e) {
-            System.out.println("Output Path: " + outputPath);
-            System.out.println("Input Path: " + inputPath);
-            e.printStackTrace();
         }
     }
 } 

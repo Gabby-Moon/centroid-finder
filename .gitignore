@@ -25,8 +25,7 @@ replay_pid*
 
 target/
 
-sampleInput/ensantina.mp4
-sampleOutput/exampleFrame.png
+.jpg
 debugFrames
 sampleOutput/*.mp4
 
@@ -36,3 +35,7 @@ server/node_modules
 *.mp4
 */sampleOutput
 */sampleInput
+thumbnails/test-squares-overwrite.jpg
+thumbnails/test-squares.jpg
+thumbnails/test-squares.jpg
+processor/.vscode/settings.json

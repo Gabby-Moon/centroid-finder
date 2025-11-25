@@ -41,10 +41,15 @@ export async function fetchThumbnailNode(filename, videoDir, thumbnailDir) {
         await fs.access(thumbnailPath);
     } catch {
         try {
+            // Wait for the video file to be accessible before generating the thumbnail
             await waitForFile(videoPath);
             await fetchThumbnailJava(videoPath, thumbnailPath);
+
         } catch (err) {
-            console.error("Unable to generate thumbnail", err);
+            console.error(`Error generating thumbnail for ${filename}:`, err);
+            console.error(`Video path: ${videoPath}`);
+            console.error(`Thumbnail path: ${thumbnailPath}`);
+            console.error(`Using JAR: ${process.env.JAR_PATH || 'default path'}`);
             throw new Error("Unable to generate thumbnail");
         }
     }
@@ -90,7 +95,7 @@ export function deleteJob(jobId) {
  * @param {number} timeout - Maximum time in milliseconds to wait before rejecting (default: 10000ms).
  * @returns {Promise<void>} Resolves when the file exists, or rejects on timeout.
 */
-async function waitForFile(filePath, interval = 500, timeout = 10000) {
+async function waitForFile(filePath, interval = 500, timeout = 5000) {
     const start = Date.now();
 
     return new Promise((resolve, reject) => {
