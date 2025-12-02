@@ -25,14 +25,14 @@ public class VideoFrameExtractorTest {
 
     @Test
     public void testExtractGroupsFromEnsantinaVideo() throws FrameGrabber.Exception, IOException {
-        String filepath = "sampleInput/ensantina.mp4";
+        String filepath = "../videos/test-video-ensantina.mp4"; // updated video path
         int threshold = 100;
         int hexTargetColor = 0x4A0000;
 
         VideoFrameExtractor extractor = new VideoFrameExtractor();
         List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
 
-        String outputPath = "sampleOutput/ensantina_groups.csv";
+        String outputPath = "../results/ensantina_groups.csv"; // updated to results folder
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
             for (ImageFrame frame : frames) {
                 Group group = frame.group();
@@ -53,61 +53,17 @@ public class VideoFrameExtractorTest {
         VideoFrameExtractor extractor = new VideoFrameExtractor();
         List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
 
-        String outputPath = "sampleOutput/small_groups.csv";
+        String outputPath = "../results/small_groups.csv";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
             for (ImageFrame frame : frames) {
                 Group group = frame.group();
                 writer.write(group.toCsvRow());
                 writer.newLine();
             }
-            writer.close();
         }
 
         System.out.println("Group data written to: " + outputPath);
-        
     }
-
-    // @Test
-    // public void testExtractGroupsFromLongWhiteBox() throws FrameGrabber.Exception, IOException, Exception {
-    //     String filepath = testVideo(60).toString();
-    //     int threshold = 100;
-    //     int hexTargetColor = 0xffffff;
-
-
-    //     System.out.println("Working directory: " + System.getProperty("user.dir"));
-        
-    //     String outputPath = "sampleOutput/small_long_groups.csv";
-    //     System.out.println(outputPath);
-
-    //     FFmpegLogCallback.set();
-
-    //     VideoFrameExtractor extractor = new VideoFrameExtractor();
-    //     List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
-        
-
-
-    //     try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
-                
-    //         for (ImageFrame frame : frames) {
-    //             Group group = frame.group();
-    //             writer.write(group.toCsvRow());
-    //             writer.newLine();
-    //             BufferedImage img = frame.image();
-    //                 if (img != null) {
-    //                     long tsMicro = frame.microsecondsTimestamp(); // microseconds
-    //                     double tsSec = tsMicro / 1_000_000.0; // convert to seconds
-    //                     File out = new File("debugFrames/", String.format("frame_%06.2f.png", tsSec));
-    //                     ImageIO.write(img, "png", out);
-                        
-    //                 }
-    //         }
-            
-            
-    //         writer.close();
-    //     }
-
-    //     System.out.println("Group data written to: " + outputPath);
-    // }
 
     @Test
     public void testExtractGroupsFromCyanBoxWithAssertions() throws FrameGrabber.Exception, IOException, Exception {
@@ -118,7 +74,7 @@ public class VideoFrameExtractorTest {
         VideoFrameExtractor extractor = new VideoFrameExtractor();
         List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
 
-        String outputPath = "sampleOutput/moving_cyan_groups.csv";
+        String outputPath = "../results/moving_cyan_groups.csv"; // updated folder
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
             int prevX = -1;
             int prevY = -1;
@@ -132,11 +88,6 @@ public class VideoFrameExtractorTest {
                 int y = group.centroid().y();
                 System.out.println("Centroid: x=" + x + ", y=" + y);
 
-                // if (prevX != -1 && prevY != -1) {
-                //     assertTrue(x >= prevX, "X should not decrease: prev=" + prevX + ", current=" + x);
-                //     assertTrue(y >= prevY, "Y should not decrease: prev=" + prevY + ", current=" + y);
-                // }
-
                 prevX = x;
                 prevY = y;
             }
@@ -145,18 +96,16 @@ public class VideoFrameExtractorTest {
         System.out.println("Group data written to: " + outputPath);
     }
 
-
     @Test
     public void testExtractedCyanCentroids() throws FrameGrabber.Exception, IOException, Exception {
         String filepath = movingTestVideo().toString();
         int threshold = 60;
         int hexTargetColor = 0x00FFFF; // Cyan
 
-
         VideoFrameExtractor extractor = new VideoFrameExtractor();
         List<ImageFrame> frames = extractor.extractFrames(filepath, threshold, hexTargetColor);
 
-        Path outputPath = Paths.get("sampleOutput/moving_cyan_groups.csv");
+        Path outputPath = Paths.get("../results/moving_cyan_groups.csv");
         Files.createDirectories(outputPath.getParent());
 
         try (BufferedWriter writer = Files.newBufferedWriter(outputPath)) {
@@ -167,27 +116,18 @@ public class VideoFrameExtractorTest {
             }
         }
 
-
-
         int prevX = -1;
         int prevY = -1;
-        int allowedRounding = 1; // allow tiny variations
+        int allowedRounding = 1;
 
         for (ImageFrame frame : frames) {
             Group group = frame.group();
             int x = group.centroid().x();
             int y = group.centroid().y();
-
-            // if (prevX != -1 && prevY != -1) {
-            //     assertTrue(x + allowedRounding >= prevX, "X should not decrease: prev=" + prevX + ", current=" + x);
-            //     assertTrue(y + allowedRounding >= prevY, "Y should not decrease: prev=" + prevY + ", current=" + y);
-            // }
-
             prevX = x;
             prevY = y;
         }
     }
-
 
     public Path testVideo(int secs) throws Exception {
         Path tempFile = Files.createTempFile("test-video", ".mp4");
@@ -220,55 +160,54 @@ public class VideoFrameExtractorTest {
         return tempFile;
     }
 
-        public Path movingTestVideo() throws Exception {
-            Path tempFile = Files.createTempFile("test-video", ".mp4");
-            tempFile.toFile().deleteOnExit();
+    public Path movingTestVideo() throws Exception {
+        Path tempFile = Files.createTempFile("testing_square", ".mp4"); // updated file name
+        tempFile.toFile().deleteOnExit();
 
-            try (FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(tempFile.toFile(), 180, 180)) {
-                recorder.setVideoCodec(org.bytedeco.ffmpeg.global.avcodec.AV_CODEC_ID_H264);
-                recorder.setFormat("mp4");
-                recorder.setFrameRate(12);
-                recorder.start();
+        try (FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(tempFile.toFile(), 180, 180)) {
+            recorder.setVideoCodec(org.bytedeco.ffmpeg.global.avcodec.AV_CODEC_ID_H264);
+            recorder.setFormat("mp4");
+            recorder.setFrameRate(12);
+            recorder.start();
 
-                Java2DFrameConverter converter = new Java2DFrameConverter();
+            Java2DFrameConverter converter = new Java2DFrameConverter();
 
-                int totalFrames = 4 * 12; // 4 seconds at 12 FPS
-                int rectWidth = 90;
-                int rectHeight = 90;
-                int maxX = 180 - rectWidth;
-                int maxY = 180 - rectHeight;
+            int totalFrames = 4 * 12; // 4 seconds at 12 FPS
+            int rectWidth = 90;
+            int rectHeight = 90;
+            int maxX = 180 - rectWidth;
+            int maxY = 180 - rectHeight;
 
-                for (int i = 0; i < totalFrames; i++) {
-                    BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_INT_RGB);
-                    Graphics2D g = img.createGraphics();
+            for (int i = 0; i < totalFrames; i++) {
+                BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = img.createGraphics();
 
-                    Color background = new Color(0, 0, 0);
-                    Color rectColor = new Color(0, 255, 255); // Cyan
+                Color background = new Color(0, 0, 0);
+                Color rectColor = new Color(0, 255, 255); // Cyan
 
-                    g.setColor(background);
-                    g.fillRect(0, 0, 180, 180);
+                g.setColor(background);
+                g.fillRect(0, 0, 180, 180);
 
-                    // Move right and down
-                    int x = (int) ((i / (double)(totalFrames - 1)) * maxX);
-                    int y = (int) ((i / (double)(totalFrames - 1)) * maxY);
+                int x = (int) ((i / (double)(totalFrames - 1)) * maxX);
+                int y = (int) ((i / (double)(totalFrames - 1)) * maxY);
 
-                    g.setColor(rectColor);
-                    g.fillRect(x, y, rectWidth, rectHeight);
+                g.setColor(rectColor);
+                g.fillRect(x, y, rectWidth, rectHeight);
 
-                    g.dispose();
-                    recorder.record(converter.convert(img));
-                }
-
-                recorder.stop();
-                converter.close();
+                g.dispose();
+                recorder.record(converter.convert(img));
             }
 
-            return tempFile;
+            recorder.stop();
+            converter.close();
         }
+
+        return tempFile;
+    }
 
     @Test
     public void movingSquareVideoWithCsv() throws Exception {
-        Path videoPath = Paths.get("sampleOutput/moving_cyan_square.mp4");
+        Path videoPath = Paths.get("../results/moving_cyan_square.mp4"); // results folder
         Files.createDirectories(videoPath.getParent());
 
         try (FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(videoPath.toFile(), 180, 180)) {
@@ -280,15 +219,10 @@ public class VideoFrameExtractorTest {
             Java2DFrameConverter converter = new Java2DFrameConverter();
 
             int totalFrames = 4 * 12;
-            int rectWidth = 30; // smaller for more accurate centroid
+            int rectWidth = 30; // smaller for centroid
             int rectHeight = 30;
             int maxX = 180 - rectWidth;
             int maxY = 180 - rectHeight;
-
-            List<ImageFrame> extractedFrames = new ArrayList<>();
-            VideoFrameExtractor extractor = new VideoFrameExtractor();
-            int threshold = 60;
-            int hexTargetColor = 0x00FFFF; // cyan
 
             for (int i = 0; i < totalFrames; i++) {
                 BufferedImage img = new BufferedImage(180, 180, BufferedImage.TYPE_3BYTE_BGR);
@@ -313,10 +247,9 @@ public class VideoFrameExtractorTest {
 
         System.out.println("Video saved to: " + videoPath);
 
-        // Extract frames and write CSV
-        String filepath = videoPath.toString();
-        List<ImageFrame> frames = new VideoFrameExtractor().extractFrames(filepath, 60, 0x00FFFF);
-        Path csvPath = Paths.get("sampleOutput/moving_cyan_square.csv");
+        List<ImageFrame> frames = new VideoFrameExtractor().extractFrames(videoPath.toString(), 60, 0x00FFFF);
+        Path csvPath = Paths.get("../results/moving_cyan_square.csv");
+        Files.createDirectories(csvPath.getParent());
         try (BufferedWriter writer = Files.newBufferedWriter(csvPath)) {
             for (ImageFrame frame : frames) {
                 writer.write(frame.group().toCsvRow());
