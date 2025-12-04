@@ -40,6 +40,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 app.use('/', routes);
+app.use('/routes', express.static('/routes'))
 
 // static file locations setup
 app.use('/videos', express.static(path.resolve(process.env.VIDEO_DIRECTORY)));
